@@ -9,3 +9,5 @@ const DepartmentSchema = new Schema({
         ref: 'TechStack'
     }]
 })
+
+export default model('Department', DepartmentSchema, 'departments')

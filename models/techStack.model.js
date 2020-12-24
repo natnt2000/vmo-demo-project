@@ -9,4 +9,4 @@ const TechStackSchema = new Schema({
     timestamps: true
 })
 
-export default model('TechStack', TechStackSchema)
+export default model('TechStack', TechStackSchema, 'techStacks')
