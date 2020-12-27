@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 
+import projectStatusRoute from './routes/projectStatus.route.js'
+
 dotenv.config()
 const app = express()
 const port = 3000
@@ -20,5 +22,6 @@ mongoose.connect(
     () => console.log("Connected to DB")
 )
 
+app.use('/api/projectStatuses', projectStatusRoute)
 
 app.listen(port, () => console.log(`Server is running`))

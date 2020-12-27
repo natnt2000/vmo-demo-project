@@ -1,22 +1,39 @@
 {
   "name": "demo-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "VMO Demo Project",
   "main": "app.js",
-  "type": "module",
   "dependencies": {
+    "ajv": "^7.0.2",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.8",
+    "jsonschema": "^1.4.0",
+    "mongoose": "^5.11.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "eslint": "^7.16.0",
     "nodemon": "^2.0.6"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app"
+    "start": "nodemon --exec babel-node app.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natnt2000/vmo-demo-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/natnt2000/vmo-demo-project/issues"
+  },
+  "homepage": "https://github.com/natnt2000/vmo-demo-project#readme"
 }
