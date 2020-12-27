@@ -7,6 +7,14 @@ const DepartmentSchema = new Schema({
     techStacks: [{
         type: Schema.Types.ObjectId,
         ref: 'TechStack'
+    }],
+    projects: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Project'
+    }],
+    staffs: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Staff'
     }]
 })
 

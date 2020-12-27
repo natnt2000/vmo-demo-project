@@ -4,7 +4,10 @@ const { Schema, model } = mongoose
 const UserSchema = new Schema({
     email: String,
     password: String,
-    status: String
+    active: {
+        type: Boolean,
+        default: true
+    }
 }, {
     timestamps: true
 })

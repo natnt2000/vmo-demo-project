@@ -4,7 +4,10 @@ const {Schema, model} = mongoose
 const TechStackSchema = new Schema({
     name: String,
     description: String,
-    status: String
+    active: {
+        type: Boolean,
+        default: true
+    }
 }, {
     timestamps: true
 })

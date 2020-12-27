@@ -5,7 +5,10 @@ const CustomerSchema = new Schema({
     name: String, 
     description: String,
     priorityNumber: Number,
-    status: String
+    active: {
+        type: Boolean,
+        default: true
+    }
 }, {
     timestamps: true
 })
