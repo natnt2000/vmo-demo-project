@@ -1,55 +1,49 @@
-import ProjectStatus from '../models/projectStatus.model.js'
-import handleResponse from '../helpers/response.helper.js'
+import { handleError } from '../helpers/response.helper.js'
+import { getAllProjectStatusesService, getOneProjectStatusService, createProjectStatusService, updateProjectStatusService, deleteProjectStatusService } from '../services/projectStatus.service'
 
-const getAll = async (req, res) => {
+const getAllProjectStatuses = async (req, res) => {
     try {
-        const projectStatuses = await ProjectStatus.find()
-        return res.json(handleResponse('Get projectStatuses successfully', projectStatuses))
+        const data = await getAllProjectStatusesService()
+        return res.status(data.status).json(data)
     } catch (error) {
-        return res.json(error)
+        return res.status(500).json(handleError(error.message, 500))
     }
 }
 
-const getOne = async (req, res) => {
+const getOneProjectStatus = async (req, res) => {
     try {
-        const projectStatus = await ProjectStatus.findOne({ _id: req.params.id })
-        return res.json(handleResponse('Get projectStatus successfully', projectStatus))
+        const data = await getOneProjectStatusService(req.params.id)
+        return res.status(data.status).json(data)
     } catch (error) {
-        return res.json(error)
+        return res.status(500).json(handleError(error.message, 500))
     }
 }
 
-const create = async (req, res) => {
+const createProjectStatus = async (req, res) => {
     try {
-        const projectStatus = new ProjectStatus({ ...req.body })
-        const newProjectStatus = await projectStatus.save()
-        return res.json(handleResponse('Create new projectStatus successfully', newProjectStatus))
+        const data = await createProjectStatusService(req.body)
+        return res.status(data.status).json(data)
     } catch (error) {
-        return res.json(error)
+        return res.status(500).json(handleError(error.message, 500))
     }
 }
 
-const update = async (req, res) => {
+const updateProjectStatus = async (req, res) => {
     try {
-        const updateProjectStatus = await ProjectStatus.updateOne(
-            { _id: req.params.id },
-            {
-                $set: { ...req.body }
-            }
-        )
-        return res.json(handleResponse('Update projectStatus successfully', updateProjectStatus))
+        const data = await updateProjectStatusService(req.params.id, req.body)
+        return res.status(data.status).json(data)
     } catch (error) {
-        return res.json(error)
+        return res.status(500).json(handleError(error.message, 500))
     }
 }
 
-const remove = async (req, res) => {
+const deleteProjectStatus = async (req, res) => {
     try {
-        const removeProjectStatus = await ProjectStatus.deleteOne({ _id: req.params.id })
-        return res.json(handleResponse('Remove projectStatus successfully', removeProjectStatus))
+        const data = await deleteProjectStatusService(req.params.id)
+        return res.status(data.status).json(data)
     } catch (error) {
-        return res.json(error)
+        return res.status(500).json(handleError(error.message, 500))
     }
 }
 
-export { getAll, getOne, create, update, remove }
+export { getAllProjectStatuses, getOneProjectStatus, createProjectStatus, updateProjectStatus, deleteProjectStatus }

@@ -1,7 +1,5 @@
 import fs from 'fs'
-
 import Ajv from 'ajv'
-
 
 const verifyRequest = (req, res, next) => {
     const { baseUrl, method } = req
@@ -13,7 +11,6 @@ const verifyRequest = (req, res, next) => {
     const valid = ajv.validate(validateSchema, req.body)
     if (!valid) return res.status(400).send(ajv.errors)
     return next()
-    
 }
 
 export default verifyRequest

@@ -2,4 +2,7 @@ const genMessageCode = message => message.split(' ').map(val => val.toUpperCase(
 
 const handleResponse = (message, data = null, status = 200) => ({ status, message, messageCode: genMessageCode(message), data })
 
-export default handleResponse
+const handleError = (message, status) => ({ status, message, messageCode: genMessageCode(message)})
+
+export { handleResponse, handleError } 
+
