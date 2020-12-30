@@ -14,9 +14,9 @@ const getAllDepartmentsService = async () => {
 const getOneDepartmentService = async id => {
     try {
         const populate = [
-            {path: 'techStacks', select: 'name'},
-            {path: 'projects', select: 'name'},
-            {path: 'staffs', select: 'fullName'}
+            { path: 'techStacks', select: 'name' },
+            { path: 'projects', select: 'name' },
+            { path: 'staffs', select: 'fullName' }
         ]
 
         const department = await Department.findOne({ _id: id }).populate(populate)
@@ -32,7 +32,7 @@ const getOneDepartmentService = async id => {
 const createDepartmentService = async data => {
     try {
         const checkExist = await verifyRequestDepartment(data)
-        
+
         if (checkExist) return checkExist
 
         const department = new Department(data)
@@ -46,11 +46,12 @@ const createDepartmentService = async data => {
 const updateDepartmentService = async (id, data) => {
     try {
         const department = await Department.findOne({ _id: id })
-        const checkExist = await verifyRequestDepartment(data)
-
-        if (checkExist) return checkExist
 
         if (!department) return handleError('Department does not exist', 404)
+
+        const checkExist = await verifyRequestDepartment(data, department)
+
+        if (checkExist) return checkExist
 
         const updateDepartment = await Department.updateOne({ _id: id }, { $set: data })
         return handleResponse('Update department successfully', updateDepartment)
@@ -72,13 +73,13 @@ const deleteDepartmentService = async id => {
     }
 }
 
-const verifyRequestDepartment = async data => {
+const verifyRequestDepartment = async (data, department = {}) => {
     const { name, techStacks } = data
 
     if (name) {
         const departmentExist = await Department.findOne({ name: { $regex: name, $options: 'i' } })
 
-        if (departmentExist) return handleError('Department already exist', 400)
+        if (departmentExist && !department || department && departmentExist && department.name !== name) return handleError('Department already exist', 400)
     }
 
     if (techStacks) {

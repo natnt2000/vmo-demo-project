@@ -6,8 +6,7 @@
             "type": "string"
         },
         "birthday": {
-            "type": "string",
-            "format": "date"
+            "type": "string"
         },
         "identificationNumber": {
             "type": "string",
@@ -46,7 +45,8 @@
                         "type": "string",
                         "enum": ["fresher", "junior", "senior"]
                     }
-                }
+                },
+                "required": ["techStack", "experience"]
             },
             "minItems": 1
         },
@@ -57,6 +57,5 @@
             },
             "uniqueItems": true
         }
-        
     }
 }
