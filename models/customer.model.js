@@ -12,3 +12,6 @@ const CustomerSchema = new Schema({
 }, {
     timestamps: true
 })
+
+
+export default model('Customer', CustomerSchema)

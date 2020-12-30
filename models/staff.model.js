@@ -4,9 +4,12 @@ const { Schema, model } = mongoose
 const SkillSchema = new Schema({
     techStack: {
         type: Schema.Types.ObjectId,
-        ref: 'TechStack',
+        ref: 'TechStack'
     },
-    experience: String,
+    experience: {
+        type: String,
+        enum: ['fresher', 'junior', 'senior']
+    }
 })
 
 const StaffSchema = new Schema(
@@ -22,13 +25,13 @@ const StaffSchema = new Schema(
         projects: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Project',
-            },
-        ],
+                ref: 'Project'
+            }
+        ]
     },
     {
-        timestamps: true,
+        timestamps: true
     }
 )
 
-export default model('Staff', StaffSchema, 'staffs')
+export default model('Staff', StaffSchema)

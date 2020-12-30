@@ -15,4 +15,4 @@ const TechStackSchema = new Schema(
     }
 )
 
-export default model('TechStack', TechStackSchema, 'techStacks')
+export default model('TechStack', TechStackSchema, 'tech_stacks')

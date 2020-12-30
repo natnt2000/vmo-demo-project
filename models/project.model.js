@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-const { Schema, model } = mongoose
+import { Schema, model } from 'mongoose'
+import Department from '../models/department.model'
 
 const ProjectSchema = new Schema(
     {
@@ -33,4 +33,23 @@ const ProjectSchema = new Schema(
     }
 )
 
-export default model('Project', ProjectSchema, 'projects')
+ProjectSchema.post('save', async function (project) {
+    try {
+        const { _id, department } = project
+        await Department.updateOne({ _id: department }, { $push: { projects: _id } })
+    } catch (error) {
+        console.log(error)
+    }
+    
+})
+
+ProjectSchema.pre('deleteOne', async function (next) {
+    try {
+        await Department.updateOne({_id: this.department}, {$pull: {projects: this._id}})
+        return next()
+    } catch (error) {
+        return next(error)
+    }
+})
+
+export default model('Project', ProjectSchema)

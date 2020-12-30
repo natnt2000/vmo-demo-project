@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-const {Schema, model} = mongoose
+import { Schema, model } from 'mongoose'
+import Project from './project.model'
 
 const DepartmentSchema = new Schema({
     name: String,
@@ -16,6 +16,21 @@ const DepartmentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Staff'
     }]
+}, {
+    timestamps: true
 })
 
-export default model('Department', DepartmentSchema, 'departments')
+DepartmentSchema.pre('deleteOne', async function (next) {
+    try {
+        await Project.updateMany(
+            { department: this._id },
+            { $pull: { department: this._id } }
+        )
+        return next()
+    } catch (error) {
+        return next(error)
+    }
+})
+
+
+export default model('Department', DepartmentSchema)
