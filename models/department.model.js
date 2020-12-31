@@ -23,7 +23,7 @@ const DepartmentSchema = new Schema({
 DepartmentSchema.pre('deleteOne', async function (next) {
     try {
         await Project.updateMany(
-            { department: this._id },
+            { _id: this.projects },
             { $pull: { department: this._id } }
         )
         return next()

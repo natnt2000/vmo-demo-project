@@ -42,6 +42,12 @@ const updateProjectStatusService = async (id, data) => {
 
         if (!projectStatus) return handleError('Project status does not exist', 404)
 
+        if (data.name) {
+            const projectStatusExist = await ProjectStatus.findOne({ name: { $regex: data.name, $options: 'i' } })
+
+            if (projectStatusExist && projectStatus.name !== data.name) return handleError('Project status name already exist')
+        }
+
         const updateProjectStatus = await ProjectStatus.updateOne(
             { _id: id },
             {

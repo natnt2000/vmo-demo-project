@@ -3,6 +3,7 @@ import ProjectType from '../models/projectType.model'
 import ProjectStatus from '../models/projectStatus.model'
 import Department from '../models/department.model'
 import TechStack from '../models/techStack.model'
+import Staff from '../models/staff.model'
 
 import { handleError, handleResponse } from '../helpers/response.helper'
 
@@ -35,8 +36,14 @@ const getOneProjectService = async id => {
 
 const createProjectService = async data => {
     try {
-        const checkExist = await verifyProjectRequest(data)
-        if (checkExist) return checkExist
+        const projectExist = await Project.findOne({ name: { $regex: data.name, $options: 'i' } })
+
+        if (projectExist) return handleError('Project name already exist', 400)
+
+        const checkRequest = await verifyProjectRequest(data)
+
+        if (checkRequest) return checkRequest
+
         const project = new Project(data)
         const newProject = await project.save()
         return handleResponse('Create project successfully', newProject)
@@ -48,11 +55,18 @@ const createProjectService = async data => {
 const updateProjectService = async (id, data) => {
     try {
         const project = await Project.findOne({ _id: id })
-        const checkExist = await verifyProjectRequest(data)
 
         if (!project) return handleError('Project does not exist', 404)
 
-        if (checkExist) return checkExist
+        if (data.name) {
+            const projectExist = await Project.findOne({ name: { $regex: data.name, $options: 'i' } })
+
+            if (projectExist && project.name !== data.name) return handleError('Project name already exist', 400)
+        }
+
+        const checkRequest = await verifyProjectRequest(data)
+
+        if (checkRequest) return checkRequest
 
         const updateProject = await Project.updateOne({ _id: id }, { $set: data })
         return handleResponse('Update project successfully', updateProject)
@@ -76,36 +90,36 @@ const deleteProjectService = async id => {
 
 const verifyProjectRequest = async data => {
     try {
-        const { name, projectType, projectStatus, techStack, department } = data
-
-        if (name) {
-            const projectExist = await Project.findOne({ name: { $regex: name, $options: 'i' } })
-
-            if (projectExist) return handleError('Project already exist', 400)
-        }
+        const { projectType, projectStatus, techStack, department, staffs } = data
 
         if (projectType) {
-            const projectTypeExist = await ProjectType.findOne({_id: projectType})
-            
+            const projectTypeExist = await ProjectType.findOne({ _id: projectType })
+
             if (!projectTypeExist) return handleError('Project type does not exist', 404)
-        } 
+        }
 
         if (projectStatus) {
-            const projectStatusExist = await ProjectStatus.findOne({_id: projectStatus})
+            const projectStatusExist = await ProjectStatus.findOne({ _id: projectStatus })
 
             if (!projectStatusExist) return handleError('Project status does not exist', 404)
-        } 
+        }
 
         if (techStack) {
-            const techStackExist = await TechStack.findOne({_id: techStack})
+            const techStackExist = await TechStack.findOne({ _id: techStack })
 
-            if (!techStackExist) return handleError('Tech stack does not exist', 404) 
+            if (!techStackExist) return handleError('Tech stack does not exist', 404)
         }
 
         if (department) {
-            const departmentExist = await Department.findOne({_id: department})
-            
-            if (!departmentExist) return handleError('Department does not exist', 404) 
+            const departmentExist = await Department.findOne({ _id: department })
+
+            if (!departmentExist) return handleError('Department does not exist', 404)
+        }
+
+        if (staffs && staffs.length > 0) {
+            const staffsExist = await Staff.find({ _id: { $in: staffs } })
+
+            if (staffsExist.length !== staffs.length) return handleError('Staffs list incorrect', 400)
         }
     } catch (error) {
         console.log(error)

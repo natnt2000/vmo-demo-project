@@ -42,6 +42,12 @@ const updateTechStackService = async (id, data) => {
 
         if (!techStack) return handleError('Tech stack does not exist', 404)
 
+        if (data.name) {
+            const techStackExist = await TechStack.findOne({ name: { $regex: data.name, $options: 'i' } })
+
+            if (techStackExist && techStack.name !== data.name) return handleError('Tech stack already exist', 400)
+        }
+
         const updateTechStack = await TechStack.updateOne(
             { _id: id },
             {

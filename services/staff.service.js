@@ -14,6 +14,12 @@ const getAllStaffsService = async () => {
 const getOneStaffService = async id => {
     try {
         const populate = [
+            {path: 'projects'},
+            {path: 'projects.projectType', select: 'name'},
+            {path: 'projects.projectStatus', select: 'name'},
+            {path: 'projects.techStack', select: 'name'},
+            {path: 'projects.department', select: 'name'},
+            {path: 'projects.staffs', select: 'name phoneNumber'},
             { path: 'skills.techStack', select: 'name' }
         ]
         const staff = await Staff.findOne({ _id: id }).populate(populate)
@@ -28,9 +34,20 @@ const getOneStaffService = async id => {
 
 const createStaffService = async data => {
     try {
-        const checkExist = await verifyRequestStaff(data)
+        const { identificationNumber, phoneNumber } = data
 
-        if (checkExist) return checkExist
+        const staffExist = await Staff.findOne({
+            $or: [
+                { identificationNumber },
+                { phoneNumber }
+            ]
+        })
+
+        if (staffExist) return handleError('Staff already exist', 400)
+
+        const checkRequest = await verifyRequestStaff(data)
+
+        if (checkRequest) return checkRequest
 
         const staff = new Staff(data)
         const newStaff = await staff.save()
@@ -46,10 +63,24 @@ const updateStaffService = async (id, data) => {
 
         if (!staff) return handleError('Staff does not exist', 404)
 
-        const checkExist = await verifyRequestStaff(data, staff)
+        const { identificationNumber, phoneNumber } = data
 
-        if (checkExist) return checkExist
+        if (identificationNumber) {
+            const staffExist = await Staff.findOne({ identificationNumber })
 
+            if (staffExist && identificationNumber !== staff.identificationNumber) return handleError('Staff already exist', 400)
+        }
+
+        if (phoneNumber) {
+            const staffExist = await Staff.findOne({ phoneNumber })
+
+            if (staffExist && phoneNumber !== staff.phoneNumber) return handleError('Staff already exist', 400)
+        }
+
+        const checkRequest = await verifyRequestStaff(data)
+
+        if (checkRequest) return checkRequest
+        
         const updateStaff = await Staff.updateOne({ _id: id }, { $set: data })
         return handleResponse('Update staff successfully', updateStaff)
     } catch (error) {
@@ -62,8 +93,8 @@ const deleteStaffService = async id => {
         const staff = await Staff.findOne({ _id: id })
 
         if (!staff) return handleError('Staff does not exist', 404)
-    
-        const deleteStaff = await Staff.deleteOne({ _id: id }) 
+
+        const deleteStaff = await Staff.deleteOne({ _id: id })
         return handleResponse('Delete staff successfully', deleteStaff)
     } catch (error) {
         console.log(error)
@@ -71,19 +102,10 @@ const deleteStaffService = async id => {
 
 }
 
-const verifyRequestStaff = async (data, staff = {}) => {
+const verifyRequestStaff = async data => {
     try {
-        const { identificationNumber, phoneNumber, skills } = data
-        const identificationNumberExist = await Staff.findOne({ identificationNumber })
-        const phoneNumberExist = await Staff.findOne({ phoneNumber })
-        
-        if (
-            identificationNumberExist && !staff || 
-            phoneNumberExist && !staff || 
-            staff && identificationNumberExist && identificationNumber !== staff.identificationNumber || 
-            staff && phoneNumberExist && phoneNumber !== staff.phoneNumber
-        ) return handleError('Staff already exist', 400)
-        
+        const { skills } = data
+
         if (skills) {
             const techStacksId = skills.map(val => val.techStack)
             const techStacks = await TechStack.find({ _id: { $in: techStacksId } })

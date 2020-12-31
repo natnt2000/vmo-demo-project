@@ -42,6 +42,12 @@ const updateCustomerService = async (id, data) => {
 
         if (!customer) return handleError('Customer does not exist', 404)
 
+        if (data.name) {
+            const customerExist = await Customer.findOne({ name: { $regex: data.name, $options: 'i' } })
+
+            if (customerExist && customer.name !== data.name) return handleError('Customer name already exist', 400)
+        }
+
         const updateCustomer = await Customer.updateOne({ _id: id }, { $set: data })
         return handleResponse('Update customer successfully', updateCustomer)
     } catch (error) {

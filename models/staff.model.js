@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import Project from './project.model'
 
 const SkillSchema = new Schema({
     techStack: {
@@ -32,5 +33,14 @@ const StaffSchema = new Schema(
         timestamps: true
     }
 )
+
+StaffSchema.pre('deleteOne', async function (next) {
+    try {
+        await Project.updateMany({_id: {$in: this.projects}}, {$pull: {staffs: this._id}})
+        return next()
+    } catch (error) {
+        return next(error)
+    }
+})
 
 export default model('Staff', StaffSchema)
