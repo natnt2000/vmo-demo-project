@@ -26,13 +26,7 @@
                 "type": "string"
             },
             "uniqueItems": true
-        },
-        "startDate": {
-            "type": "string"
-        },
-        "endDate": {
-            "type": "string"
         }
     },
-    "required": ["name", "description", "projectType", "projectStatus", "techStack", "department", "staffs", "startDate", "endDate"]
+    "required": ["name", "description", "projectType", "projectStatus", "techStack", "department", "staffs"]
 }

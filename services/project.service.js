@@ -7,10 +7,33 @@ import Staff from '../models/staff.model'
 
 import { handleError, handleResponse } from '../helpers/response.helper'
 
-const getAllProjectsService = async () => {
+const getAllProjectsService = async query => {
     try {
-        const projects = await Project.find()
-        return handleResponse('Get projects successfully', projects)
+        const { from, to, projectStatus, projectType, techStack, page, limit } = query
+        const pageNumber = parseInt(page) < 0 || !page ? 0 : parseInt(page) - 1
+        const limitNumber = parseInt(limit) || 3
+        const skip = pageNumber * limitNumber
+
+        const projects = await Project.find({
+            $and: [
+                projectStatus ? { projectStatus } : {},
+                projectType ? { projectType } : {},
+                techStack ? { techStack } : {},
+                {
+                    createdAt: {
+                        $gte: from ? new Date(from) : new Date('1970-01-01'),
+                        $lte: to ? new Date(to).setHours(23, 59, 59) : new Date(),
+                    }
+                }
+            ]
+        }).sort({createdAt: -1}).skip(skip).limit(limitNumber)
+
+        const totalItems = await Project.find().countDocuments()
+        
+        return handleResponse('Get projects successfully', {
+            totalItems: from || to || projectStatus || projectType || techStack ? projects.length : totalItems,
+            projects
+        })
     } catch (error) {
         console.log(error)
     }
@@ -46,10 +69,6 @@ const createProjectService = async data => {
         if (checkRequest) return checkRequest
 
         const project = new Project(data)
-        const checkDates = project.checkDates(data.startDate, data.endDate)
-
-        if (!checkDates) return handleError('Start date must be less than end date', 400)
-
         const newProject = await project.save()
         return handleResponse('Create project successfully', newProject)
     } catch (error) {
@@ -60,7 +79,7 @@ const createProjectService = async data => {
 const updateProjectService = async (id, data) => {
     try {
         const project = await Project.findOne({ _id: id })
-        const { name, startDate, endDate } = data
+        const { name } = data
 
         if (!project) return handleError('Project does not exist', 404)
 
@@ -68,18 +87,6 @@ const updateProjectService = async (id, data) => {
             const projectExist = await Project.findOne({ name: { $regex: name, $options: 'i' } })
 
             if (projectExist && project.name !== name) return handleError('Project name already exist', 400)
-        }
-
-        if (startDate) {
-            if (!project.checkDates(startDate, project.endDate)) return handleError('Start date must be less than end date', 400)
-        }
-
-        if (endDate) {
-            if (!project.checkDates(project.startDate, endDate)) return handleError('End date must be greater than start date', 400)
-        }
-
-        if (startDate && endDate) {
-            if (!project.checkDates(startDate, endDate)) return handleError('Start date must be less than end date', 400)
         }
 
         const checkRequest = await verifyProjectRequest(data)

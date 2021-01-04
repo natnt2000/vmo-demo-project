@@ -27,18 +27,12 @@ const ProjectSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref: 'Staff'
             }
-        ],
-        startDate: Date,
-        endDate: Date
+        ]
     },
     {
         timestamps: true
     }
 )
-
-ProjectSchema.methods.checkDates = (startDate, endDate) => {
-    return Date.parse(startDate) < Date.parse(endDate)
-}
 
 ProjectSchema.post('save', async function (project) {
     try {
