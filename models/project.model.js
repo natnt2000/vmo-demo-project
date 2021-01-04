@@ -1,4 +1,3 @@
-import { validate } from 'jsonschema'
 import { Schema, model } from 'mongoose'
 import Department from '../models/department.model'
 import Staff from '../models/staff.model'
@@ -13,27 +12,33 @@ const ProjectSchema = new Schema(
         },
         projectStatus: {
             type: Schema.Types.ObjectId,
-            ref: 'ProjectStatus',
+            ref: 'ProjectStatus'
         },
         techStack: {
             type: Schema.Types.ObjectId,
-            ref: 'TechStack',
+            ref: 'TechStack'
         },
         department: {
             type: Schema.Types.ObjectId,
-            ref: 'Department',
+            ref: 'Department'
         },
         staffs: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Staff',
+                ref: 'Staff'
             }
         ],
+        startDate: Date,
+        endDate: Date
     },
     {
-        timestamps: true,
+        timestamps: true
     }
 )
+
+ProjectSchema.methods.checkDates = (startDate, endDate) => {
+    return Date.parse(startDate) < Date.parse(endDate)
+}
 
 ProjectSchema.post('save', async function (project) {
     try {
@@ -48,7 +53,7 @@ ProjectSchema.post('save', async function (project) {
 ProjectSchema.pre('deleteOne', async function (next) {
     try {
         await Department.updateOne({ _id: this.department }, { $pull: { projects: this._id } })
-        await Staff.updateMany({ _id: { $in: this.staffs } }, {$pull: {projects: this._id}})
+        await Staff.updateMany({ _id: { $in: this.staffs } }, { $pull: { projects: this._id } })
         return next()
     } catch (error) {
         return next(error)

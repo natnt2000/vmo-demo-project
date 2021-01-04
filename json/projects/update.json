@@ -26,6 +26,12 @@
                 "type": "string"
             },
             "uniqueItems": true
+        },
+        "startDate": {
+            "type": "string"
+        },
+        "endDate": {
+            "type": "string"
         }
     }
 }

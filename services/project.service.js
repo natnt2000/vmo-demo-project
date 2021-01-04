@@ -23,6 +23,7 @@ const getOneProjectService = async id => {
             { path: 'projectStatus', select: 'name' },
             { path: 'techStack', select: 'name' },
             { path: 'department', select: 'name' },
+            { path: 'staffs', select: 'fullName' }
         ]
         const project = await Project.findOne({ _id: id }).populate(populate)
 
@@ -45,6 +46,10 @@ const createProjectService = async data => {
         if (checkRequest) return checkRequest
 
         const project = new Project(data)
+        const checkDates = project.checkDates(data.startDate, data.endDate)
+
+        if (!checkDates) return handleError('Start date must be less than end date', 400)
+
         const newProject = await project.save()
         return handleResponse('Create project successfully', newProject)
     } catch (error) {
@@ -55,13 +60,26 @@ const createProjectService = async data => {
 const updateProjectService = async (id, data) => {
     try {
         const project = await Project.findOne({ _id: id })
+        const { name, startDate, endDate } = data
 
         if (!project) return handleError('Project does not exist', 404)
 
-        if (data.name) {
-            const projectExist = await Project.findOne({ name: { $regex: data.name, $options: 'i' } })
+        if (name) {
+            const projectExist = await Project.findOne({ name: { $regex: name, $options: 'i' } })
 
-            if (projectExist && project.name !== data.name) return handleError('Project name already exist', 400)
+            if (projectExist && project.name !== name) return handleError('Project name already exist', 400)
+        }
+
+        if (startDate) {
+            if (!project.checkDates(startDate, project.endDate)) return handleError('Start date must be less than end date', 400)
+        }
+
+        if (endDate) {
+            if (!project.checkDates(project.startDate, endDate)) return handleError('End date must be greater than start date', 400)
+        }
+
+        if (startDate && endDate) {
+            if (!project.checkDates(startDate, endDate)) return handleError('Start date must be less than end date', 400)
         }
 
         const checkRequest = await verifyProjectRequest(data)

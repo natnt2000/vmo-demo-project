@@ -8,11 +8,11 @@ const ProjectTypeSchema = new Schema(
         priorityNumber: Number,
         active: {
             type: Boolean,
-            default: true,
-        },
+            default: true
+        }
     },
     {
-        timestamps: true,
+        timestamps: true
     }
 )
 

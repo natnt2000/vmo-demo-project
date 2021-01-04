@@ -7,11 +7,11 @@ const TechStackSchema = new Schema(
         description: String,
         active: {
             type: Boolean,
-            default: true,
-        },
+            default: true
+        }
     },
     {
-        timestamps: true,
+        timestamps: true
     }
 )
 

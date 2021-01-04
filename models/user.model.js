@@ -7,11 +7,11 @@ const UserSchema = new Schema(
         password: String,
         active: {
             type: Boolean,
-            default: true,
-        },
+            default: true
+        }
     },
     {
-        timestamps: true,
+        timestamps: true
     }
 )
 

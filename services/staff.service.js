@@ -14,12 +14,16 @@ const getAllStaffsService = async () => {
 const getOneStaffService = async id => {
     try {
         const populate = [
-            {path: 'projects'},
-            {path: 'projects.projectType', select: 'name'},
-            {path: 'projects.projectStatus', select: 'name'},
-            {path: 'projects.techStack', select: 'name'},
-            {path: 'projects.department', select: 'name'},
-            {path: 'projects.staffs', select: 'name phoneNumber'},
+            {
+                path: 'projects',
+                select: '-staffs',
+                populate: [
+                    { path: 'projectType', select: 'name' },
+                    { path: 'projectStatus', select: 'name' },
+                    { path: 'techStack', select: 'name' },
+                    { path: 'department', select: 'name' }
+                ]
+            },
             { path: 'skills.techStack', select: 'name' }
         ]
         const staff = await Staff.findOne({ _id: id }).populate(populate)
@@ -80,7 +84,7 @@ const updateStaffService = async (id, data) => {
         const checkRequest = await verifyRequestStaff(data)
 
         if (checkRequest) return checkRequest
-        
+
         const updateStaff = await Staff.updateOne({ _id: id }, { $set: data })
         return handleResponse('Update staff successfully', updateStaff)
     } catch (error) {
