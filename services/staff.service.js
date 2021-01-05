@@ -2,10 +2,33 @@ import Staff from '../models/staff.model'
 import TechStack from '../models/techStack.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
 
-const getAllStaffsService = async () => {
+const getAllStaffsService = async query => {
     try {
-        const staffs = await Staff.find()
-        return handleResponse('Get staffs successfully', staffs)
+        const { experience, techStack, certificate, page, limit, joiningProjects } = query
+        const pageNumber = parseInt(page) < 0 || !page ? 0 : parseInt(page) - 1
+        const limitNumber = parseInt(limit) || 5
+        const skip = pageNumber * limitNumber
+        const conditions = {
+            $and: [
+                experience || techStack ? {
+                    skills: {
+                        $elemMatch: {
+                            $and: [
+                                techStack ? { techStack } : {},
+                                experience ? { experience } : {}
+                            ]
+                        }
+                    }
+                } : {},
+                certificate ? { certificates: certificate } : {},
+                joiningProjects ? { projects: { $size: parseInt(joiningProjects) } } : {}
+            ]
+        }
+
+        const staffs = await Staff.find(conditions).sort({ createdAt: -1 }).skip(skip).limit(limitNumber)
+        const totalItems = await Staff.find(conditions).countDocuments()
+
+        return handleResponse('Get staffs successfully', { totalItems, staffs })
     } catch (error) {
         console.log(error)
     }

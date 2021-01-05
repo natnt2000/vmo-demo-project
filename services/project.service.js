@@ -11,10 +11,9 @@ const getAllProjectsService = async query => {
     try {
         const { from, to, projectStatus, projectType, techStack, page, limit } = query
         const pageNumber = parseInt(page) < 0 || !page ? 0 : parseInt(page) - 1
-        const limitNumber = parseInt(limit) || 3
+        const limitNumber = parseInt(limit) || 5
         const skip = pageNumber * limitNumber
-
-        const projects = await Project.find({
+        const conditions = {
             $and: [
                 projectStatus ? { projectStatus } : {},
                 projectType ? { projectType } : {},
@@ -26,14 +25,11 @@ const getAllProjectsService = async query => {
                     }
                 }
             ]
-        }).sort({createdAt: -1}).skip(skip).limit(limitNumber)
+        }
 
-        const totalItems = await Project.find().countDocuments()
-        
-        return handleResponse('Get projects successfully', {
-            totalItems: from || to || projectStatus || projectType || techStack ? projects.length : totalItems,
-            projects
-        })
+        const projects = await Project.find(conditions).sort({createdAt: -1}).skip(skip).limit(limitNumber)
+        const totalItems = await Project.find(conditions).countDocuments()
+        return handleResponse('Get projects successfully', { totalItems, projects })
     } catch (error) {
         console.log(error)
     }
