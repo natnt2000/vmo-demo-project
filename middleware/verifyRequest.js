@@ -2,10 +2,10 @@ import fs from 'fs'
 import Ajv from 'ajv'
 
 const verifyRequest = (req, res, next) => {
-    const { baseUrl, method } = req
-    const dirName = baseUrl.split('/')[2]
-    const fileName = method === 'POST' ? 'create' : 'update'
-    const validateSchema = JSON.parse(fs.readFileSync(`./json/${dirName}/${fileName}.json`, 'utf-8'))
+    const validateFilePath = JSON.parse(fs.readFileSync('./config/validateFilePath.json', 'utf-8'))
+    const { originalUrl, method } = req
+    const urlFinal = originalUrl.slice(-1) === '/' ? originalUrl.slice(0, originalUrl.length - 1) : originalUrl
+    const validateSchema = JSON.parse(fs.readFileSync(validateFilePath[method][urlFinal], 'utf-8'))
 
     const ajv = new Ajv({ allErrors: true })
     const valid = ajv.validate(validateSchema, req.body)

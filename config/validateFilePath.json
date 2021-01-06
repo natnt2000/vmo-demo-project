@@ -1,0 +1,22 @@
+{
+    "POST": {
+        "/api/customers": "./json/customers/create.json",
+        "/api/departments": "./json/departments/create.json",
+        "/api/projects": "./json/projects/create.json",
+        "/api/projectStatuses": "./json/projectStatuses/create.json",
+        "/api/projectTypes": "./json/projectTypes/create.json",
+        "/api/staffs": "./json/staffs/create.json",
+        "/api/techStacks": "./json/techStacks/create.json",
+        "/api/users": "./json/users/create.json",
+        "/auth/login": "./json/auth/login.json"
+    }, 
+    "PUT": {
+        "/api/customers/:id": "./json/customers/update.json",
+        "/api/departments/:id": "./json/departments/update.json",
+        "/api/projects/:id": "./json/projects/update.json",
+        "/api/projectStatuses/:id": "./json/projectStatuses/update.json",
+        "/api/projectTypes/:id": "./json/projectTypes/update.json",
+        "/api/staffs/:id": "./json/staffs/update.json",
+        "/api/techStacks/:id": "./json/techStacks/update.json"
+    }
+}

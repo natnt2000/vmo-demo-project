@@ -1,22 +1,23 @@
 import { handleError } from '../helpers/response.helper'
-import { getAllUsersService, createUserService } from '../services/user.service'
+import { loginService, refreshAccessTokenService } from '../services/auth.service'
 
-const getAllUsers = async (req, res) => {
+const login = async (req, res) => {
     try {
-        const data = await getAllUsersService()
+        const data = await loginService(req.body)
         return res.status(data.status).json(data)
     } catch (error) {
         return res.status(500).json(handleError(error.message, 500))
     }
 }
 
-const createUser = async (req, res) => {
+const refreshAccessToken = async (req, res) => {
     try {
-        const data = await createUserService(req.body)
+        const data = await refreshAccessTokenService({_id: req.userId}, req.body.refreshToken)
         return res.status(data.status).json(data)
     } catch (error) {
         return res.status(500).json(handleError(error.message, 500))
     }
 }
 
-export { getAllUsers, createUser }
+export { login, refreshAccessToken }
+
