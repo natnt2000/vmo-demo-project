@@ -1,3 +1,4 @@
+import logger from '../helpers/logger.helper'
 import { handleError, handleResponse } from '../helpers/response.helper'
 import { jwtSign } from '../helpers/token.helper'
 import User from '../models/user.model'
@@ -16,6 +17,8 @@ const loginService = async data => {
         const payload = { _id: user._id }
         const accessToken = jwtSign(payload, process.env.ACCESS_TOKEN_SECRET_KEY, process.env.ACCESS_TOKEN_LIFE)
         const refreshToken = jwtSign(payload, process.env.REFRESH_TOKEN_SECRET_KEY, process.env.REFRESH_TOKEN_LIFE)
+
+        logger.info(`User [${user._id}] logged in to system`)
         return handleResponse('Login successfully', { accessToken, refreshToken })
     } catch (error) {
         console.log(error)
@@ -25,6 +28,8 @@ const loginService = async data => {
 const refreshAccessTokenService = async (payload, refreshToken) => {
     try {
         const accessToken = jwtSign(payload, process.env.ACCESS_TOKEN_SECRET_KEY, process.env.ACCESS_TOKEN_LIFE)
+
+        logger.info(`User [${payload._id}] logged in to system`)
         return handleResponse('Login successfully', { accessToken, refreshToken })
     } catch (error) {
         console.log(error)
