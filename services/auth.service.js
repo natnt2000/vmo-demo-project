@@ -18,7 +18,8 @@ const loginService = async data => {
         const accessToken = jwtSign(payload, process.env.ACCESS_TOKEN_SECRET_KEY, process.env.ACCESS_TOKEN_LIFE)
         const refreshToken = jwtSign(payload, process.env.REFRESH_TOKEN_SECRET_KEY, process.env.REFRESH_TOKEN_LIFE)
 
-        logger.info(`User [${user._id}] logged in to system`)
+        if (process.env.NODE_ENV !== 'test') logger.info(`User [${user._id}] logged in to system`)
+        
         return handleResponse('Login successfully', { accessToken, refreshToken })
     } catch (error) {
         console.log(error)
