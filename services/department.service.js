@@ -86,16 +86,16 @@ const deleteDepartmentService = async id => {
 const verifyRequestDepartment = async data => {
     const { techStacks, projects } = data
 
-    if (techStacks) {
+    if (techStacks && techStacks.length > 0) {
         const techStacksExist = await TechStack.find({ _id: { $in: techStacks } })
 
-        if (techStacksExist.length !== techStacks.length) return handleError('Something incorrect in tech stack list', 404)
+        if (techStacksExist.length !== techStacks.length) return handleError('Tech stack in list incorrect', 400)
     }
 
     if (projects && projects.length > 0) {
         const projectsExist = await Project.find({ _id: { $in: projects } })
 
-        if (projectsExist.length !== projects.length) return handleError('Projects list incorrect', 400)
+        if (projectsExist.length !== projects.length) return handleError('Project in list incorrect', 400)
     }
 
 }
