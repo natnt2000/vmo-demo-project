@@ -50,7 +50,6 @@ describe('Department testing', () => {
 
         createDepartment.resolves(data)
         const result = await createDepartmentService(data)
-        console.log(result)
         expect(result.status).equal(200)
         expect(result.data.techStacks).to.be.an('array')
     })

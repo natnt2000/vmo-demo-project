@@ -4,3 +4,4 @@
 .env.qa
 /logs
 /.nyc_output
+/coverage

@@ -37,7 +37,7 @@
     "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=dev mocha --require @babel/register --require @babel/polyfill ./tests/*.test.js --timeout 60000 --exit",
+    "test": "cross-env NODE_ENV=dev mocha --require @babel/register --require @babel/polyfill ./tests/*.test.js --exit",
     "test:coverage": "cross-env NODE_ENV=dev mocha --require @babel/register --require @babel/polyfill ./tests/coverage.js --exit",
     "coverage": "nyc npm run test:coverage",
     "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node app.js",
