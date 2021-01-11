@@ -6,6 +6,7 @@ import TechStack from '../models/techStack.model'
 import Staff from '../models/staff.model'
 
 import { handleError, handleResponse } from '../helpers/response.helper'
+import logger from '../helpers/logger.helper'
 
 const getAllProjectsService = async query => {
     try {
@@ -31,6 +32,7 @@ const getAllProjectsService = async query => {
         const totalItems = await Project.find(conditions).countDocuments()
         return handleResponse('Get projects successfully', { totalItems, projects })
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -50,6 +52,7 @@ const getOneProjectService = async id => {
 
         return handleResponse('Get project successfully', project)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -68,6 +71,7 @@ const createProjectService = async data => {
         const newProject = await project.save()
         return handleResponse('Create project successfully', newProject)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -92,6 +96,7 @@ const updateProjectService = async (id, data) => {
         const updateProject = await Project.updateOne({ _id: id }, { $set: data })
         return handleResponse('Update project successfully', updateProject)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -105,6 +110,7 @@ const deleteProjectService = async id => {
         const deleteProject = await Project.deleteOne({ _id: id })
         return handleResponse('Delete project successfully', deleteProject)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -143,6 +149,7 @@ const verifyProjectRequest = async data => {
             if (staffsExist.length !== staffs.length) return handleError('Staffs list incorrect', 400)
         }
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }

@@ -1,11 +1,13 @@
 import TechStack from '../models/techStack.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
+import logger from '../helpers/logger.helper'
 
 const getAllTechStacksService = async () => {
     try {
         const techStacks = await TechStack.find()
         return handleResponse('Get tech stacks successfully', techStacks)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -18,6 +20,7 @@ const getOneTechStackService = async (id) => {
 
         return handleResponse('Get tech stack successfully', techStack)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -32,6 +35,7 @@ const createTechStackService = async (data) => {
         const newTechStack = await techStack.save()
         return handleResponse('Create tech stack successfully', newTechStack)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -57,6 +61,7 @@ const updateTechStackService = async (id, data) => {
 
         return handleResponse('Update tech stack successfully', updateTechStack)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -70,6 +75,7 @@ const deleteTechStackService = async (id) => {
         const deleteTechStack = await TechStack.deleteOne({ _id: id })
         return handleResponse('Delete tech stack successfully', deleteTechStack)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }

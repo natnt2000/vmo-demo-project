@@ -1,11 +1,13 @@
 import ProjectType from '../models/projectType.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
+import logger from '../helpers/logger.helper'
 
 const getAllProjectTypeService = async () => {
     try {
         const projectTypes = await ProjectType.find()
         return handleResponse('Get project types successfully', projectTypes)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -18,6 +20,7 @@ const getOneProjectTypeService = async (id) => {
 
         return handleResponse('Get project type successfully', projectType)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -32,6 +35,7 @@ const createProjectTypeService = async (data) => {
         const newProjectType = await projectType.save()
         return handleResponse('Create new project type successfully', newProjectType)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -56,6 +60,7 @@ const updateProjectTypeService = async (id, data) => {
         )
         return handleResponse('Update project type successfully', updateProjectType)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -69,6 +74,7 @@ const deleteProjectTypeService = async (id) => {
         const deleteProjectType = await ProjectType.deleteOne({ _id: id })
         return handleResponse('Remove project type successfully', deleteProjectType)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }

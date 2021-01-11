@@ -1,3 +1,4 @@
+import logger from '../helpers/logger.helper'
 import { handleError, handleResponse } from '../helpers/response.helper'
 import User from '../models/user.model'
 
@@ -6,6 +7,7 @@ const getAllUsersService = async () => {
         const users = await User.find()
         return handleResponse('Get users successfully', users)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -20,6 +22,7 @@ const createUserService = async data => {
         const saveUser = await user.save()
         return handleResponse('Create user successfully', saveUser)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }

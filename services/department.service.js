@@ -2,12 +2,14 @@ import Department from '../models/department.model'
 import TechStack from '../models/techStack.model'
 import Project from '../models/department.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
+import logger from '../helpers/logger.helper'
 
 const getAllDepartmentsService = async () => {
     try {
         const departments = await Department.find()
         return handleResponse('Get departments successfully', departments)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -26,6 +28,7 @@ const getOneDepartmentService = async id => {
 
         return handleResponse('Get department successfully', department)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -44,6 +47,7 @@ const createDepartmentService = async data => {
         const newDepartment = await department.save()
         return handleResponse('Create department successfully', newDepartment)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -66,6 +70,7 @@ const updateDepartmentService = async (id, data) => {
         const updateDepartment = await Department.updateOne({ _id: id }, { $set: data })
         return handleResponse('Update department successfully', updateDepartment)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -79,23 +84,29 @@ const deleteDepartmentService = async id => {
         const deleteDepartment = await Department.deleteOne({ _id: id })
         return handleResponse('Delete department successfully', deleteDepartment)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
 
 const verifyRequestDepartment = async data => {
-    const { techStacks, projects } = data
+    try {
+        const { techStacks, projects } = data
 
-    if (techStacks && techStacks.length > 0) {
-        const techStacksExist = await TechStack.find({ _id: { $in: techStacks } })
+        if (techStacks && techStacks.length > 0) {
+            const techStacksExist = await TechStack.find({ _id: { $in: techStacks } })
 
-        if (techStacksExist.length !== techStacks.length) return handleError('Tech stack in list incorrect', 400)
-    }
+            if (techStacksExist.length !== techStacks.length) return handleError('Tech stack in list incorrect', 400)
+        }
 
-    if (projects && projects.length > 0) {
-        const projectsExist = await Project.find({ _id: { $in: projects } })
+        if (projects && projects.length > 0) {
+            const projectsExist = await Project.find({ _id: { $in: projects } })
 
-        if (projectsExist.length !== projects.length) return handleError('Project in list incorrect', 400)
+            if (projectsExist.length !== projects.length) return handleError('Project in list incorrect', 400)
+        }
+    } catch (error) {
+        logger.error(error.message)
+        console.log(error)
     }
 
 }

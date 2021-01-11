@@ -22,6 +22,6 @@ app.use(helmet())
 database()
 routes(app)
 
-app.listen(port, () => console.log(`Server is running`))
+const server = app.listen(port, () => console.log(`Server is running`))
 
-export default app
+export default server

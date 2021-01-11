@@ -19,8 +19,9 @@ const loginService = async data => {
         const refreshToken = jwtSign(payload, process.env.REFRESH_TOKEN_SECRET_KEY, process.env.REFRESH_TOKEN_LIFE)
         logger.info(`User [${user._id}] logged in to system`)
         return handleResponse('Login successfully', { accessToken, refreshToken })
-    } catch (error) {
+    } catch (error) {        
         console.log(error)
+        logger.error(error.message)
     }
 }
 
@@ -32,6 +33,7 @@ const refreshAccessTokenService = async (payload, refreshToken) => {
         return handleResponse('Login successfully', { accessToken, refreshToken })
     } catch (error) {
         console.log(error)
+        logger.error(error.message)
     }
 }
 

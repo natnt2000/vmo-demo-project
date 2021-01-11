@@ -1,11 +1,13 @@
 import ProjectStatus from '../models/projectStatus.model.js'
 import { handleResponse, handleError } from '../helpers/response.helper.js'
+import logger from '../helpers/logger.helper.js'
 
 const getAllProjectStatusesService = async () => {
     try {
         const projectStatuses = await ProjectStatus.find()
         return handleResponse('Get project statuses successfully', projectStatuses)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -18,6 +20,7 @@ const getOneProjectStatusService = async (id) => {
 
         return handleResponse('Get project status successfully', projectStatus)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -32,6 +35,7 @@ const createProjectStatusService = async (data) => {
         const newProjectStatus = await projectStatus.save()
         return handleResponse('Create new project status successfully', newProjectStatus)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -56,6 +60,7 @@ const updateProjectStatusService = async (id, data) => {
         )
         return handleResponse('Update project status successfully', updateProjectStatus)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -69,6 +74,7 @@ const deleteProjectStatusService = async (id) => {
         const deleteProjectStatus = await ProjectStatus.deleteOne({ _id: id })
         return handleResponse('Remove project status successfully', deleteProjectStatus)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }

@@ -1,6 +1,7 @@
 import Staff from '../models/staff.model'
 import TechStack from '../models/techStack.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
+import logger from '../helpers/logger.helper'
 
 const getAllStaffsService = async query => {
     try {
@@ -30,6 +31,7 @@ const getAllStaffsService = async query => {
 
         return handleResponse('Get staffs successfully', { totalItems, staffs })
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -55,6 +57,7 @@ const getOneStaffService = async id => {
 
         return handleResponse('Get staff successfully', staff)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -80,6 +83,7 @@ const createStaffService = async data => {
         const newStaff = await staff.save()
         return handleResponse('Create staff successfully', newStaff)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -111,6 +115,7 @@ const updateStaffService = async (id, data) => {
         const updateStaff = await Staff.updateOne({ _id: id }, { $set: data })
         return handleResponse('Update staff successfully', updateStaff)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }
@@ -124,6 +129,7 @@ const deleteStaffService = async id => {
         const deleteStaff = await Staff.deleteOne({ _id: id })
         return handleResponse('Delete staff successfully', deleteStaff)
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 
@@ -140,6 +146,7 @@ const verifyRequestStaff = async data => {
             if (techStacks.length !== techStacksId.length) return handleError('Tech stacks incorrect', 400)
         }
     } catch (error) {
+        logger.error(error.message)
         console.log(error)
     }
 }

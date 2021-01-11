@@ -1,8 +1,12 @@
-import app from '../app'
+import server from '../app'
 import { expect } from 'chai'
 import { loginService } from '../services/auth.service'
 
 describe('Auth testing', () => {
+    afterEach(() => {
+        server.close()
+    })
+
     it('Should login successfully', async () => {
         const acc = { email: "anhpn@gmail.com", password: "huytay95" }
         const result = await loginService(acc)
