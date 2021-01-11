@@ -1,4 +1,10 @@
-import { getAllProjectTypes, getOneProjectType, createProjectType, updateProjectType, deleteProjectType } from '../controllers/projectType.controller'
+import {
+  getAllProjectTypes,
+  getOneProjectType,
+  createProjectType,
+  updateProjectType,
+  deleteProjectType,
+} from '../controllers/projectType.controller'
 import verifyRequest from '../middleware/verifyRequest'
 import express from 'express'
 import { verifyAccessToken } from '../middleware/verifyToken'
@@ -18,4 +24,3 @@ router.put('/:id', verifyRequest, updateProjectType)
 router.delete('/:id', deleteProjectType)
 
 export default router
-

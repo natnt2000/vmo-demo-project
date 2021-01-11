@@ -1,4 +1,10 @@
-import { getAllTechStacks, getOneTechStack, createTechStack, updateTechStack, deleteTechStack } from '../controllers/techStack.controller'
+import {
+  getAllTechStacks,
+  getOneTechStack,
+  createTechStack,
+  updateTechStack,
+  deleteTechStack,
+} from '../controllers/techStack.controller'
 import verifyRequest from '../middleware/verifyRequest'
 import express from 'express'
 import { verifyAccessToken } from '../middleware/verifyToken'

@@ -1,6 +1,12 @@
 import verifyRequest from '../middleware/verifyRequest'
 import express from 'express'
-import { createProject, getAllProjects, getOneProject, updateProject, deleteProject } from '../controllers/project.controller'
+import {
+  createProject,
+  getAllProjects,
+  getOneProject,
+  updateProject,
+  deleteProject,
+} from '../controllers/project.controller'
 import { verifyAccessToken } from '../middleware/verifyToken'
 
 const router = express.Router()

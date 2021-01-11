@@ -9,7 +9,7 @@ import { urlencoded, json } from 'body-parser'
 import cors from 'cors'
 import helmet from 'helmet'
 
-config({ path: `./.env.${process.env.NODE_ENV}`})
+config({ path: `./.env.${process.env.NODE_ENV}` })
 
 const app = express()
 const port = 3000
@@ -25,3 +25,4 @@ routes(app)
 const server = app.listen(port, () => console.log(`Server is running`))
 
 export default server
+

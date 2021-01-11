@@ -1,4 +1,10 @@
-import { getAllCustomers, getOneCustomer, createCustomer, updateCustomer, deleteCustomer } from '../controllers/customer.controller'
+import {
+  getAllCustomers,
+  getOneCustomer,
+  createCustomer,
+  updateCustomer,
+  deleteCustomer,
+} from '../controllers/customer.controller'
 import verifyRequest from '../middleware/verifyRequest'
 import express from 'express'
 import { verifyAccessToken } from '../middleware/verifyToken'

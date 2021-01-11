@@ -1,4 +1,10 @@
-import { createStaff, deleteStaff, getAllStaffs, getOneStaff, updateStaff } from '../controllers/staff.controller'
+import {
+  createStaff,
+  deleteStaff,
+  getAllStaffs,
+  getOneStaff,
+  updateStaff,
+} from '../controllers/staff.controller'
 import verifyRequest from '../middleware/verifyRequest'
 import express from 'express'
 import { verifyAccessToken } from '../middleware/verifyToken'

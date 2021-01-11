@@ -3,81 +3,92 @@ import { handleError, handleResponse } from '../helpers/response.helper'
 import logger from '../helpers/logger.helper'
 
 const getAllTechStacksService = async () => {
-    try {
-        const techStacks = await TechStack.find()
-        return handleResponse('Get tech stacks successfully', techStacks)
-    } catch (error) {
-        logger.error(error.message)
-        console.log(error)
-    }
+  try {
+    const techStacks = await TechStack.find()
+    return handleResponse('Get tech stacks successfully', techStacks)
+  } catch (error) {
+    logger.error(error.message)
+    console.log(error)
+  }
 }
 
 const getOneTechStackService = async (id) => {
-    try {
-        const techStack = await TechStack.findOne({ _id: id })
+  try {
+    const techStack = await TechStack.findOne({ _id: id })
 
-        if (!techStack) return handleError('Tech stack does not exist', 404) 
+    if (!techStack) return handleError('Tech stack does not exist', 404)
 
-        return handleResponse('Get tech stack successfully', techStack)
-    } catch (error) {
-        logger.error(error.message)
-        console.log(error)
-    }
+    return handleResponse('Get tech stack successfully', techStack)
+  } catch (error) {
+    logger.error(error.message)
+    console.log(error)
+  }
 }
 
 const createTechStackService = async (data) => {
-    try {
-        const techStackExist = await TechStack.findOne({ name: { $regex: data.name, $options: 'i' } })
+  try {
+    const techStackExist = await TechStack.findOne({
+      name: { $regex: data.name, $options: 'i' },
+    })
 
-        if (techStackExist) return handleError('Tech stack already exist', 400)
+    if (techStackExist) return handleError('Tech stack already exist', 400)
 
-        const techStack = new TechStack(data)
-        const newTechStack = await techStack.save()
-        return handleResponse('Create tech stack successfully', newTechStack)
-    } catch (error) {
-        logger.error(error.message)
-        console.log(error)
-    }
+    const techStack = new TechStack(data)
+    const newTechStack = await techStack.save()
+    return handleResponse('Create tech stack successfully', newTechStack)
+  } catch (error) {
+    logger.error(error.message)
+    console.log(error)
+  }
 }
 
 const updateTechStackService = async (id, data) => {
-    try {
-        const techStack = await TechStack.findOne({ _id: id })
+  try {
+    const techStack = await TechStack.findOne({ _id: id })
 
-        if (!techStack) return handleError('Tech stack does not exist', 404)
+    if (!techStack) return handleError('Tech stack does not exist', 404)
 
-        if (data.name) {
-            const techStackExist = await TechStack.findOne({ name: { $regex: data.name, $options: 'i' } })
+    if (data.name) {
+      const techStackExist = await TechStack.findOne({
+        name: { $regex: data.name, $options: 'i' },
+      })
 
-            if (techStackExist && techStack.name !== data.name) return handleError('Tech stack already exist', 400)
-        }
-
-        const updateTechStack = await TechStack.updateOne(
-            { _id: id },
-            {
-                $set: data
-            }
-        )
-
-        return handleResponse('Update tech stack successfully', updateTechStack)
-    } catch (error) {
-        logger.error(error.message)
-        console.log(error)
+      if (techStackExist && techStack.name !== data.name)
+        return handleError('Tech stack already exist', 400)
     }
+
+    const updateTechStack = await TechStack.updateOne(
+      { _id: id },
+      {
+        $set: data,
+      }
+    )
+
+    return handleResponse('Update tech stack successfully', updateTechStack)
+  } catch (error) {
+    logger.error(error.message)
+    console.log(error)
+  }
 }
 
 const deleteTechStackService = async (id) => {
-    try {
-        const techStack = await TechStack.findOne({ _id: id })
+  try {
+    const techStack = await TechStack.findOne({ _id: id })
 
-        if (!techStack) return handleError('Tech stack does not exist', 404)
+    if (!techStack) return handleError('Tech stack does not exist', 404)
 
-        const deleteTechStack = await TechStack.deleteOne({ _id: id })
-        return handleResponse('Delete tech stack successfully', deleteTechStack)
-    } catch (error) {
-        logger.error(error.message)
-        console.log(error)
-    }
+    const deleteTechStack = await TechStack.deleteOne({ _id: id })
+    return handleResponse('Delete tech stack successfully', deleteTechStack)
+  } catch (error) {
+    logger.error(error.message)
+    console.log(error)
+  }
 }
 
-export { getAllTechStacksService, getOneTechStackService, createTechStackService, updateTechStackService, deleteTechStackService }
+export {
+  getAllTechStacksService,
+  getOneTechStackService,
+  createTechStackService,
+  updateTechStackService,
+  deleteTechStackService,
+}
