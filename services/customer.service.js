@@ -27,9 +27,7 @@ const getOneCustomerService = async (id) => {
 
 const createCustomerService = async (data) => {
   try {
-    const customerExist = await Customer.findOne({
-      name: { $regex: data.name, $options: 'i' },
-    })
+    const customerExist = await Customer.findOne({ name: data.name })
 
     if (customerExist) return handleError('Customer already exist', 400)
 
@@ -49,9 +47,7 @@ const updateCustomerService = async (id, data) => {
     if (!customer) return handleError('Customer does not exist', 404)
 
     if (data.name) {
-      const customerExist = await Customer.findOne({
-        name: { $regex: data.name, $options: 'i' },
-      })
+      const customerExist = await Customer.findOne({ name: data.name })
 
       if (customerExist && customer.name !== data.name)
         return handleError('Customer name already exist', 400)

@@ -27,9 +27,7 @@ const getOneProjectTypeService = async (id) => {
 
 const createProjectTypeService = async (data) => {
   try {
-    const projectTypeExist = await ProjectType.findOne({
-      name: { $regex: data.name, $options: 'i' },
-    })
+    const projectTypeExist = await ProjectType.findOne({ name: data.name })
 
     if (projectTypeExist) return handleError('Project type already exist', 400)
 
@@ -52,9 +50,7 @@ const updateProjectTypeService = async (id, data) => {
     if (!projectType) return handleError('Project type does not exist', 404)
 
     if (data.name) {
-      const projectTypeExist = await ProjectType.findOne({
-        name: { $regex: data.name, $options: 'i' },
-      })
+      const projectTypeExist = await ProjectType.findOne({ name: data.name })
 
       if (projectTypeExist && projectType.name !== data.name)
         return handleError('Project type name already exist', 400)

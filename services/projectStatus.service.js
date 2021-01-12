@@ -27,9 +27,7 @@ const getOneProjectStatusService = async (id) => {
 
 const createProjectStatusService = async (data) => {
   try {
-    const projectStatusExist = await ProjectStatus.findOne({
-      name: { $regex: data.name, $options: 'i' },
-    })
+    const projectStatusExist = await ProjectStatus.findOne({ name: data.name })
 
     if (projectStatusExist)
       return handleError('Project status already exist', 400)
@@ -53,12 +51,10 @@ const updateProjectStatusService = async (id, data) => {
     if (!projectStatus) return handleError('Project status does not exist', 404)
 
     if (data.name) {
-      const projectStatusExist = await ProjectStatus.findOne({
-        name: { $regex: data.name, $options: 'i' },
-      })
+      const projectStatusExist = await ProjectStatus.findOne({ name: data.name })
 
-      if (projectStatusExist && projectStatus.name !== data.name)
-        return handleError('Project status name already exist')
+      if (projectStatusExist && projectStatusExist.name !== data.name)
+        return handleError('Project status name already exist', 400)
     }
 
     const updateProjectStatus = await ProjectStatus.updateOne(
@@ -79,7 +75,7 @@ const updateProjectStatusService = async (id, data) => {
 
 const deleteProjectStatusService = async (id) => {
   try {
-    const projectStatus = await ProjectStatus.findOne({ _id: id })
+    const projectStatus = await getOneProjectStatusService(id)
 
     if (!projectStatus) return handleError('Project status does not exist', 404)
 

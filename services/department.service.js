@@ -35,9 +35,7 @@ const getOneDepartmentService = async (id) => {
 
 const createDepartmentService = async (data) => {
   try {
-    const departmentExist = await Department.findOne({
-      name: { $regex: data.name, $options: 'i' },
-    })
+    const departmentExist = await Department.findOne({ name: data.name })
 
     if (departmentExist) return handleError('Department already exist', 400)
 
@@ -62,9 +60,7 @@ const updateDepartmentService = async (id, data) => {
     if (!department) return handleError('Department does not exist', 404)
 
     if (data.name) {
-      const departmentExist = await Department.findOne({
-        name: { $regex: data.name, $options: 'i' },
-      })
+      const departmentExist = await Department.findOne({ name: data.name })
 
       if (departmentExist && department.name !== data.name)
         return handleError('Department already exist', 400)

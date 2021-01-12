@@ -1,23 +1,28 @@
-import fs from 'fs'
+import {promises as fs} from 'fs'
 import Ajv from 'ajv'
+import logger from '../helpers/logger.helper'
 
-const verifyRequest = (req, res, next) => {
-  const validateFilePath = JSON.parse(
-    fs.readFileSync('./config/validateFilePath.json', 'utf-8')
-  )
-  const { originalUrl, method } = req
-  const urlFinal =
-    originalUrl.slice(-1) === '/'
-      ? originalUrl.slice(0, originalUrl.length - 1)
-      : originalUrl
-  const validateSchema = JSON.parse(
-    fs.readFileSync(validateFilePath[method][urlFinal], 'utf-8')
-  )
+const verifyRequest = async (req, res, next) => {
+  try {
+    const validateFilePath = JSON.parse(
+      await fs.readFile('./config/validateFilePath.json', 'utf-8')
+    )
 
-  const ajv = new Ajv({ allErrors: true })
-  const valid = ajv.validate(validateSchema, req.body)
-  if (!valid) return res.status(400).send(ajv.errors)
-  return next()
+    const { method, baseUrl } = req
+    const pathWithParam = baseUrl + req.route.path
+    
+    const validateSchema = JSON.parse(
+      await fs.readFile(validateFilePath[method][method === 'POST' ? baseUrl : pathWithParam], 'utf-8')
+    )
+  
+    const ajv = new Ajv({ allErrors: true })
+    const valid = ajv.validate(validateSchema, req.body)
+    if (!valid) return res.status(400).send(ajv.errors)
+    return next()
+  } catch (error) {
+    logger.error(error.message)
+    return next(error)
+  }
 }
 
 export default verifyRequest
