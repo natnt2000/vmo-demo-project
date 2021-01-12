@@ -2,9 +2,9 @@ import TechStack from '../models/techStack.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
 import logger from '../helpers/logger.helper'
 
-const getAllTechStacksService = async () => {
+const getAllTechStacksService = async (filter = {}) => {
   try {
-    const techStacks = await TechStack.find()
+    const techStacks = await TechStack.find(filter)
     return handleResponse('Get tech stacks successfully', techStacks)
   } catch (error) {
     logger.error(error.message)

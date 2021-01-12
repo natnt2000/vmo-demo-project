@@ -4,9 +4,9 @@ import Project from '../models/department.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
 import logger from '../helpers/logger.helper'
 
-const getAllDepartmentsService = async () => {
+const getAllDepartmentsService = async (filter = {}) => {
   try {
-    const departments = await Department.find()
+    const departments = await Department.find(filter)
     return handleResponse('Get departments successfully', departments)
   } catch (error) {
     logger.error(error.message)

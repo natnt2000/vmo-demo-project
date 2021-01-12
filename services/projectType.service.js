@@ -2,9 +2,9 @@ import ProjectType from '../models/projectType.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
 import logger from '../helpers/logger.helper'
 
-const getAllProjectTypeService = async () => {
+const getAllProjectTypeService = async (filter = {}) => {
   try {
-    const projectTypes = await ProjectType.find()
+    const projectTypes = await ProjectType.find(filter)
     return handleResponse('Get project types successfully', projectTypes)
   } catch (error) {
     logger.error(error.message)

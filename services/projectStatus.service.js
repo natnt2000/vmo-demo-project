@@ -2,9 +2,9 @@ import ProjectStatus from '../models/projectStatus.model.js'
 import { handleResponse, handleError } from '../helpers/response.helper.js'
 import logger from '../helpers/logger.helper.js'
 
-const getAllProjectStatusesService = async () => {
+const getAllProjectStatusesService = async (filter = {}) => {
   try {
-    const projectStatuses = await ProjectStatus.find()
+    const projectStatuses = await ProjectStatus.find(filter)
     return handleResponse('Get project statuses successfully', projectStatuses)
   } catch (error) {
     logger.error(error.message)

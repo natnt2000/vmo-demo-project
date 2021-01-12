@@ -2,9 +2,9 @@ import logger from '../helpers/logger.helper'
 import { handleError, handleResponse } from '../helpers/response.helper'
 import User from '../models/user.model'
 
-const getAllUsersService = async () => {
+const getAllUsersService = async (filter = {}) => {
   try {
-    const users = await User.find()
+    const users = await User.find(filter)
     return handleResponse('Get users successfully', users)
   } catch (error) {
     logger.error(error.message)
