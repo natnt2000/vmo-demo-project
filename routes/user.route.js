@@ -7,8 +7,8 @@ const router = express.Router()
 
 router.use(verifyAccessToken)
 
-router.get('/', getAllUsers)
-
-router.post('/', verifyRequest, createUser)
+router.route('/users')
+  .get(getAllUsers)
+  .post(verifyRequest, createUser)
 
 export default router

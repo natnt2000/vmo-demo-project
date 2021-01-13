@@ -7,14 +7,14 @@ const verifyRequest = async (req, res, next) => {
     const validateFilePath = JSON.parse(
       await fs.readFile('./config/validateFilePath.json', 'utf-8')
     )
-
-    const { method, baseUrl } = req
-    const pathWithParam = baseUrl + req.route.path
+    
+    const { method } = req
+    const routePath = req.route.path
     
     const validateSchema = JSON.parse(
-      await fs.readFile(validateFilePath[method][method === 'POST' ? baseUrl : pathWithParam], 'utf-8')
+      await fs.readFile(validateFilePath[method][routePath], 'utf-8')
     )
-  
+
     const ajv = new Ajv({ allErrors: true })
     const valid = ajv.validate(validateSchema, req.body)
     if (!valid) return res.status(400).send(ajv.errors)

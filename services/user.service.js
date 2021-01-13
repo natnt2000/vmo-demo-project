@@ -7,7 +7,7 @@ const getAllUsersService = async (filter = {}) => {
     const users = await User.find(filter)
     return handleResponse('Get users successfully', users)
   } catch (error) {
-    logger.error(error.message)
+    logger.error(error.message) 
     console.log(error)
   }
 }

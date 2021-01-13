@@ -12,6 +12,16 @@ const getAllTechStacksService = async (filter = {}) => {
   }
 }
 
+const getTechStackLengthService = async (conditions = {}) => {
+  try {
+    const techStackLength = await TechStack.countDocuments(conditions)
+    return handleResponse('Get tech stacks length successfully', techStackLength)
+  } catch (error) {
+    logger.error(error.message)
+    console.log(error)
+  }
+}
+
 const getOneTechStackService = async (id) => {
   try {
     const techStack = await TechStack.findOne({ _id: id })
@@ -87,4 +97,5 @@ export {
   createTechStackService,
   updateTechStackService,
   deleteTechStackService,
+  getTechStackLengthService,
 }

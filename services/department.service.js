@@ -1,6 +1,4 @@
 import Department from '../models/department.model'
-import TechStack from '../models/techStack.model'
-import Project from '../models/department.model'
 import { handleError, handleResponse } from '../helpers/response.helper'
 import logger from '../helpers/logger.helper'
 
@@ -35,13 +33,10 @@ const getOneDepartmentService = async (id) => {
 
 const createDepartmentService = async (data) => {
   try {
-    const departmentExist = await Department.findOne({ name: data.name })
+    const { name } = data
+    const departmentExist = await Department.findOne({ name })
 
     if (departmentExist) return handleError('Department already exist', 400)
-
-    const checkRequest = await verifyRequestDepartment(data)
-
-    if (checkRequest) return checkRequest
 
     const department = new Department(data)
     const newDepartment = await department.save()
@@ -54,19 +49,17 @@ const createDepartmentService = async (data) => {
 
 const updateDepartmentService = async (id, data) => {
   try {
+    const { name } = data
     const department = await Department.findOne({ _id: id })
-    const checkRequest = await verifyRequestDepartment(data)
 
     if (!department) return handleError('Department does not exist', 404)
 
-    if (data.name) {
-      const departmentExist = await Department.findOne({ name: data.name })
+    if (name) {
+      const departmentExist = await Department.findOne({ name })
 
-      if (departmentExist && department.name !== data.name)
+      if (departmentExist && department.name !== name)
         return handleError('Department already exist', 400)
     }
-
-    if (checkRequest) return checkRequest
 
     const updateDepartment = await Department.updateOne(
       { _id: id },
@@ -87,29 +80,6 @@ const deleteDepartmentService = async (id) => {
 
     const deleteDepartment = await Department.deleteOne({ _id: id })
     return handleResponse('Delete department successfully', deleteDepartment)
-  } catch (error) {
-    logger.error(error.message)
-    console.log(error)
-  }
-}
-
-const verifyRequestDepartment = async (data) => {
-  try {
-    const { techStacks, projects } = data
-
-    if (techStacks && techStacks.length > 0) {
-      const techStacksExist = await TechStack.find({ _id: { $in: techStacks } })
-
-      if (techStacksExist.length !== techStacks.length)
-        return handleError('Tech stack in list incorrect', 400)
-    }
-
-    if (projects && projects.length > 0) {
-      const projectsExist = await Project.find({ _id: { $in: projects } })
-
-      if (projectsExist.length !== projects.length)
-        return handleError('Project in list incorrect', 400)
-    }
   } catch (error) {
     logger.error(error.message)
     console.log(error)

@@ -13,14 +13,13 @@ const router = express.Router()
 
 router.use(verifyAccessToken)
 
-router.get('/', getAllCustomers)
+router.route('/customers')
+  .get(getAllCustomers)
+  .post(verifyRequest, createCustomer)
 
-router.get('/:id', getOneCustomer)
-
-router.post('/', verifyRequest, createCustomer)
-
-router.put('/:id', verifyRequest, updateCustomer)
-
-router.delete('/:id', deleteCustomer)
+router.route('/customers/:id')
+  .get(getOneCustomer)
+  .put(verifyRequest, updateCustomer)
+  .delete(deleteCustomer)
 
 export default router

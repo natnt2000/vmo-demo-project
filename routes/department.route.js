@@ -13,14 +13,13 @@ const router = express.Router()
 
 router.use(verifyAccessToken)
 
-router.get('/', getAllDepartments)
+router.route('/departments')
+  .get(getAllDepartments)
+  .post(verifyRequest, createDepartment)
 
-router.get('/:id', getOneDepartment)
-
-router.post('/', verifyRequest, createDepartment)
-
-router.put('/:id', verifyRequest, updateDepartment)
-
-router.delete('/:id', deleteDepartment)
+router.route('/departments/:id')
+  .get(getOneDepartment)
+  .put(verifyRequest, updateDepartment)
+  .delete(deleteDepartment)
 
 export default router

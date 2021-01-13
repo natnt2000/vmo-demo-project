@@ -13,14 +13,13 @@ const router = express.Router()
 
 router.use(verifyAccessToken)
 
-router.get('/', getAllTechStacks)
+router.route('/techStacks')
+  .get(getAllTechStacks)
+  .post(verifyRequest, createTechStack)
 
-router.get('/:id', getOneTechStack)
-
-router.post('/', verifyRequest, createTechStack)
-
-router.put('/:id', verifyRequest, updateTechStack)
-
-router.delete('/:id', deleteTechStack)
+router.route('/techStacks/:id')
+  .get(getOneTechStack)
+  .put(verifyRequest, updateTechStack)
+  .delete(deleteTechStack)
 
 export default router

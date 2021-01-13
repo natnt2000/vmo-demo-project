@@ -5,8 +5,8 @@ import { verifyRefreshToken } from '../middleware/verifyToken'
 
 const router = express.Router()
 
-router.post('/login', verifyRequest, login)
+router.route('/auth/login').post(verifyRequest, login)
 
-router.post('/refresh-token', verifyRefreshToken, refreshAccessToken)
+router.route('/auth/refresh-token').post(verifyRefreshToken, refreshAccessToken)
 
 export default router

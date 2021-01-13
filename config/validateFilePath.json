@@ -1,13 +1,13 @@
 {
     "POST": {
-        "/api/customers": "./json/customers/create.json",
-        "/api/departments": "./json/departments/create.json",
-        "/api/projects": "./json/projects/create.json",
-        "/api/projectStatuses": "./json/projectStatuses/create.json",
-        "/api/projectTypes": "./json/projectTypes/create.json",
-        "/api/staffs": "./json/staffs/create.json",
-        "/api/techStacks": "./json/techStacks/create.json",
-        "/api/users": "./json/users/create.json",
+        "/customers": "./json/customers/create.json",
+        "/departments": "./json/departments/create.json",
+        "/projects": "./json/projects/create.json",
+        "/projectStatuses": "./json/projectStatuses/create.json",
+        "/projectTypes": "./json/projectTypes/create.json",
+        "/staffs": "./json/staffs/create.json",
+        "/techStacks": "./json/techStacks/create.json",
+        "/users": "./json/users/create.json",
         "/auth/login": "./json/auth/login.json"
     }, 
     "PUT": {

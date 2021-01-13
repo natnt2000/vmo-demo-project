@@ -5,6 +5,9 @@ import {
   updateDepartmentService,
   deleteDepartmentService,
 } from '../services/department.service'
+import { getTechStackLengthService } from '../services/techStack.service'
+import { getProjectLengthService } from '../services/project.service'
+
 import { handleError } from '../helpers/response.helper'
 
 const getAllDepartments = async (req, res) => {
@@ -27,6 +30,20 @@ const getOneDepartment = async (req, res) => {
 
 const createDepartment = async (req, res) => {
   try {
+    const { techStacks, projects } = req.body
+    
+    if (techStacks) {
+      const techStackLength = await getTechStackLengthService({ _id: { $in: techStacks } })
+
+      if (techStacks.length !== techStackLength.data) return res.status(400).json(handleError('Tech stack in list incorrect', 400))
+    }
+
+    if (projects) {
+      const projectLength = await getProjectLengthService({ _id: { $in: projects } })
+
+    if (projects.length !== projectLength) return res.status(400).json(handleError('Project in list incorrect', 400))
+    }
+
     const data = await createDepartmentService(req.body)
     return res.status(data.status).json(data)
   } catch (error) {
@@ -36,6 +53,20 @@ const createDepartment = async (req, res) => {
 
 const updateDepartment = async (req, res) => {
   try {
+    const { techStacks, projects } = req.body
+    
+    if (techStacks) {
+      const techStackLength = await getTechStackLengthService({ _id: { $in: techStacks } })
+
+      if (techStacks.length !== techStackLength.data) return res.status(400).json(handleError('Tech stack in list incorrect', 400))
+    }
+
+    if (projects) {
+      const projectLength = await getProjectLengthService({ _id: { $in: projects } })
+
+    if (projects.length !== projectLength.data) return res.status(400).handleError('Project in list incorrect', 400)
+    }
+
     const data = await updateDepartmentService(req.params.id, req.body)
     return res.status(data.status).json(data)
   } catch (error) {

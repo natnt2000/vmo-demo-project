@@ -13,14 +13,13 @@ const router = express.Router()
 
 router.use(verifyAccessToken)
 
-router.get('/', getAllProjects)
-
-router.get('/:id', getOneProject)
-
-router.post('/', verifyRequest, createProject)
-
-router.put('/:id', verifyRequest, updateProject)
-
-router.delete('/:id', deleteProject)
+router.route('/projects')
+  .get(getAllProjects)
+  .post(verifyRequest, createProject)
+  
+router.route('/projects/:id')
+  .get(getOneProject)
+  .put(verifyRequest, updateProject)
+  .delete(deleteProject)
 
 export default router

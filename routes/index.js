@@ -9,13 +9,16 @@ import userRoute from './user.route'
 import authRoute from './auth.route'
 
 export default (app) => {
-  app.use('/auth', authRoute)
-  app.use('/api/projectStatuses', projectStatusRoute)
-  app.use('/api/projectTypes', projectTypeRoute)
-  app.use('/api/techStacks', techStackRoute)
-  app.use('/api/customers', customerRoute)
-  app.use('/api/departments', departmentRoute)
-  app.use('/api/staffs', staffRoute)
-  app.use('/api/projects', projectRoute)
-  app.use('/api/users', userRoute)
+  app.use('/', authRoute)
+
+  app.use('/api', [
+    projectStatusRoute,
+    projectTypeRoute,
+    techStackRoute,
+    customerRoute,
+    departmentRoute,
+    staffRoute,
+    projectRoute,
+    userRoute
+  ])
 }
