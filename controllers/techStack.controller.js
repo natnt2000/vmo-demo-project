@@ -18,7 +18,7 @@ const getAllTechStacks = async (req, res) => {
 
 const getOneTechStack = async (req, res) => {
   try {
-    const data = await getOneTechStackService(req.params.id)
+    const data = await getOneTechStackService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
     return res.status(500).json(handleError(error.message, 500))

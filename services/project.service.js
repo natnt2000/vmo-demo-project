@@ -52,7 +52,7 @@ const getProjectLengthService = async (conditions = {}) => {
   }
 }
 
-const getOneProjectService = async (id) => {
+const getOneProjectService = async (conditions) => {
   try {
     const populate = [
       { path: 'projectType', select: 'name' },
@@ -61,7 +61,7 @@ const getOneProjectService = async (id) => {
       { path: 'department', select: 'name' },
       { path: 'staffs', select: 'fullName' },
     ]
-    const project = await Project.findOne({ _id: id }).populate(populate)
+    const project = await Project.findOne(conditions).populate(populate)
 
     if (!project) return handleError('Project does not exist', 404)
 

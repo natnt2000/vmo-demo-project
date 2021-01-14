@@ -21,7 +21,7 @@ const getAllDepartments = async (req, res) => {
 
 const getOneDepartment = async (req, res) => {
   try {
-    const data = await getOneDepartmentService(req.params.id)
+    const data = await getOneDepartmentService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
     return res.status(500).json(handleError(error.message, 500))

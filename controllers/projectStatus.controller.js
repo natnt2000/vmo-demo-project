@@ -18,7 +18,7 @@ const getAllProjectStatuses = async (req, res) => {
 
 const getOneProjectStatus = async (req, res) => {
   try {
-    const data = await getOneProjectStatusService(req.params.id)
+    const data = await getOneProjectStatusService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
     return res.status(500).json(handleError(error.message, 500))

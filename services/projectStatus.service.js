@@ -12,9 +12,9 @@ const getAllProjectStatusesService = async (filter = {}) => {
   }
 }
 
-const getOneProjectStatusService = async (id) => {
+const getOneProjectStatusService = async (conditions) => {
   try {
-    const projectStatus = await ProjectStatus.findOne({ _id: id })
+    const projectStatus = await ProjectStatus.findOne(conditions)
 
     if (!projectStatus) return handleError('Project status does not exist', 404)
 

@@ -12,7 +12,7 @@ const getAllDepartmentsService = async (filter = {}) => {
   }
 }
 
-const getOneDepartmentService = async (id) => {
+const getOneDepartmentService = async (conditions) => {
   try {
     const populate = [
       { path: 'techStacks', select: 'name' },
@@ -20,7 +20,7 @@ const getOneDepartmentService = async (id) => {
       { path: 'staffs', select: 'fullName' },
     ]
 
-    const department = await Department.findOne({ _id: id }).populate(populate)
+    const department = await Department.findOne(conditions).populate(populate)
 
     if (!department) return handleError('Department does not exist', 404)
 

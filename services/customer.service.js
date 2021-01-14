@@ -12,9 +12,9 @@ const getAllCustomersService = async (filter = {}) => {
   }
 }
 
-const getOneCustomerService = async (id) => {
+const getOneCustomerService = async (conditions) => {
   try {
-    const customer = await Customer.findOne({ _id: id })
+    const customer = await Customer.findOne(conditions)
 
     if (!customer) return handleError('Customer does not exist', 404)
 

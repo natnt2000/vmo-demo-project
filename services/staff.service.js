@@ -59,7 +59,7 @@ const getStaffLengthService = async (conditions = {}) => {
     }
 }
 
-const getOneStaffService = async (id) => {
+const getOneStaffService = async (conditions) => {
   try {
     const populate = [
       {
@@ -74,7 +74,7 @@ const getOneStaffService = async (id) => {
       },
       { path: 'skills.techStack', select: 'name' },
     ]
-    const staff = await Staff.findOne({ _id: id }).populate(populate)
+    const staff = await Staff.findOne(conditions).populate(populate)
 
     if (!staff) return handleError('Staff does not exist', 404)
 

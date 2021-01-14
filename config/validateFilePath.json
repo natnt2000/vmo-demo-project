@@ -11,12 +11,12 @@
         "/auth/login": "./json/auth/login.json"
     }, 
     "PUT": {
-        "/api/customers/:id": "./json/customers/update.json",
-        "/api/departments/:id": "./json/departments/update.json",
-        "/api/projects/:id": "./json/projects/update.json",
-        "/api/projectStatuses/:id": "./json/projectStatuses/update.json",
-        "/api/projectTypes/:id": "./json/projectTypes/update.json",
-        "/api/staffs/:id": "./json/staffs/update.json",
-        "/api/techStacks/:id": "./json/techStacks/update.json"
+        "/customers/:id": "./json/customers/update.json",
+        "/departments/:id": "./json/departments/update.json",
+        "/projects/:id": "./json/projects/update.json",
+        "/projectStatuses/:id": "./json/projectStatuses/update.json",
+        "/projectTypes/:id": "./json/projectTypes/update.json",
+        "/staffs/:id": "./json/staffs/update.json",
+        "/techStacks/:id": "./json/techStacks/update.json"
     }
 }

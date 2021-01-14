@@ -12,9 +12,9 @@ const getAllProjectTypeService = async (filter = {}) => {
   }
 }
 
-const getOneProjectTypeService = async (id) => {
+const getOneProjectTypeService = async (conditions) => {
   try {
-    const projectType = await ProjectType.findOne({ _id: id })
+    const projectType = await ProjectType.findOne(conditions)
 
     if (!projectType) return handleError('Project type does not exist', 404)
 

@@ -18,7 +18,7 @@ const getAllProjectTypes = async (req, res) => {
 
 const getOneProjectType = async (req, res) => {
   try {
-    const data = await getOneProjectTypeService(req.params.id)
+    const data = await getOneProjectTypeService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
     return res.status(500).json(handleError(error.message, 500))

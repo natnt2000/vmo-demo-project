@@ -8,22 +8,22 @@ import {
 } from '../services/projectStatus.service'
 
 describe('Project status testing', () => {
-  let getAll, create, getOne
+  let getAllProjectStatuses, createProjectStatus, getOneProjectStatus
 
   beforeEach(() => {
-    getAll = stub(ProjectStatus, 'find')
-    create = stub(ProjectStatus.prototype, 'save')
-    getOne = stub(ProjectStatus, 'findOne')
+    getAllProjectStatuses = stub(ProjectStatus, 'find')
+    createProjectStatus = stub(ProjectStatus.prototype, 'save')
+    getOneProjectStatus = stub(ProjectStatus, 'findOne')
   })
 
   afterEach(() => {
-    getAll.restore()
-    create.restore()
-    getOne.restore()
+    getAllProjectStatuses.restore()
+    createProjectStatus.restore()
+    getOneProjectStatus.restore()
   })
 
   it('Get all project statuses successfully', async () => {
-    getAll.resolves([])
+    getAllProjectStatuses.resolves([])
     const result = await getAllProjectStatusesService()
     expect(result.status).equal(200)
     expect(result.data).to.be.an('array')
@@ -35,8 +35,8 @@ describe('Project status testing', () => {
       name: 'Test 123',
       description: 'Description 123',
     }
-    getOne.resolves(data)
-    const result = await getOneProjectStatusService(data.id)
+    getOneProjectStatus.resolves(data)
+    const result = await getOneProjectStatusService({ _id: data.id })
     expect(result.status).equal(200)
     expect(result.data.name).equal(data.name)
     expect(result.data.description).equal(data.description)
@@ -48,7 +48,7 @@ describe('Project status testing', () => {
       description: 'Description 123',
     }
 
-    getOne.resolves(data)
+    getOneProjectStatus.resolves(data)
     const result = await createProjectStatusService(data)
     expect(result.status).equal(400)
   })
@@ -59,7 +59,7 @@ describe('Project status testing', () => {
       description: 'Description 123',
     }
 
-    create.resolves(data)
+    createProjectStatus.resolves(data)
     const result = await createProjectStatusService(data)
     expect(result.status).equal(200)
     expect(result.message).equal('Create new project status successfully')

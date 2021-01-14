@@ -22,9 +22,9 @@ const getTechStackLengthService = async (conditions = {}) => {
   }
 }
 
-const getOneTechStackService = async (id) => {
+const getOneTechStackService = async (conditions) => {
   try {
-    const techStack = await TechStack.findOne({ _id: id })
+    const techStack = await TechStack.findOne(conditions)
 
     if (!techStack) return handleError('Tech stack does not exist', 404)
 

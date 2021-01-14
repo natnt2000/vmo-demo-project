@@ -19,7 +19,7 @@ const getAllStaffs = async (req, res) => {
 
 const getOneStaff = async (req, res) => {
   try {
-    const data = await getOneStaffService(req.params.id)
+    const data = await getOneStaffService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
     return res.status(500).json(handleError(error.message, 500))
@@ -48,7 +48,7 @@ const createStaff = async (req, res) => {
 const updateStaff = async (req, res) => {
   try {
     const { skills } = req.body
-    
+
     if (skills) {
       const techStacksId = skills.map((val) => val.techStack)
       const techStackLength = await getTechStackLengthService({ _id: { $in: techStacksId } })
