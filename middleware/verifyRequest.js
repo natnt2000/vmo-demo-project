@@ -7,11 +7,8 @@ const verifyRequest = async (req, res, next) => {
     const validateFilePath = JSON.parse(
       await fs.readFile('./config/validateFilePath.json', 'utf-8')
     )
-    
     const { method } = req
     const routePath = req.route.path
-    console.log({method, routePath})
-    
     const validateSchema = JSON.parse(
       await fs.readFile(validateFilePath[method][routePath], 'utf-8')
     )

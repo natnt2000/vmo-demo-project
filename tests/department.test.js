@@ -44,7 +44,7 @@ describe('Department testing', () => {
       populate: stub().resolves(data)
     })
 
-    const result = await getOneDepartmentService(data.id)
+    const result = await getOneDepartmentService({ _id: data.id })
     expect(result.status).equal(200)
     expect(result.data.techStacks).to.be.an('array')
   })
