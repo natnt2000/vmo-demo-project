@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { spy, stub } from 'sinon'
+import { stub } from 'sinon'
 import Project from '../models/project.model'
 import { createProjectService, getAllProjectsService, getOneProjectService } from '../services/project.service'
 

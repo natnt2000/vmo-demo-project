@@ -7,13 +7,6 @@ describe('Auth testing', () => {
     server.close()
   })
 
-  it('Should login successfully', async () => {
-    const acc = { email: 'anhpn@gmail.com', password: 'huytay95' }
-    const result = await loginService(acc)
-    expect(result.status).equal(200)
-    expect(result.data).to.include.all.keys('accessToken', 'refreshToken')
-  })
-
   it('Email does not exist', async () => {
     const acc = { email: 'anhpn@gmail.com1' }
     const result = await loginService(acc)
@@ -24,5 +17,12 @@ describe('Auth testing', () => {
     const acc = { email: 'anhpn@gmail.com', password: 'huytay9511' }
     const result = await loginService(acc)
     expect(result.status).equal(400)
+  })
+
+  it('Should login successfully', async () => {
+    const acc = { email: 'anhpn@gmail.com', password: 'huytay95' }
+    const result = await loginService(acc)
+    expect(result.status).equal(200)
+    expect(result.data).to.include.all.keys('accessToken', 'refreshToken')
   })
 })
