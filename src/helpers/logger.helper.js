@@ -36,7 +36,7 @@ const logTransport = [
     })
     */
   new transports.File({
-    filename: './src/logs/error.log',
+    filename: './logs/error.log',
   }),
 ]
 

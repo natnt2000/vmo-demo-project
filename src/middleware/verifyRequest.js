@@ -14,9 +14,10 @@ const verifyRequest = async (req, res, next) => {
       await fs.readFile(validateFilePath[method][routePath], 'utf-8')
     )
 
-    const ajv = new Ajv({ allErrors: true })
+    const ajv = new Ajv()
     const valid = ajv.validate(validateSchema, req.body)
-    if (!valid) return res.status(400).send(ajv.errors)
+
+    if (!valid) return res.status(400).send(handleError(ajv.errorsText(), 400, 'VALIDATE_ERROR'))
     return next()
   } catch (error) {
     logger.error(new Error(error.message))
