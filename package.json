@@ -37,9 +37,9 @@
     "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=dev mocha --require @babel/register --require @babel/polyfill ./tests --exit",
+    "test": "cross-env NODE_ENV=dev mocha --require @babel/register --require @babel/polyfill ./src/tests --exit",
     "coverage": "nyc npm test",
-    "start:dev": "cross-env NODE_ENV=dev nodemon --exec babel-node app.js",
+    "start:dev": "cross-env NODE_ENV=dev nodemon --exec babel-node ./src/app.js",
     "start": "cross-env NODE_ENV=dev node app.js",
     "build": "webpack --config webpack.config.js"
   },
