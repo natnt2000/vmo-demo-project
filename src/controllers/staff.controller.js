@@ -13,7 +13,7 @@ const getAllStaffs = async (req, res) => {
     const data = await getAllStaffsService(req.query)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -22,7 +22,7 @@ const getOneStaff = async (req, res) => {
     const data = await getOneStaffService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -40,8 +40,8 @@ const createStaff = async (req, res) => {
     const data = await createStaffService(req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    console.log(error)
-    return res.status(500).json(handleError(error.message, 500))
+
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -59,7 +59,7 @@ const updateStaff = async (req, res) => {
     const data = await updateStaffService(req.params.id, req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -68,7 +68,7 @@ const deleteStaff = async (req, res) => {
     const data = await deleteStaffService(req.params.id)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 

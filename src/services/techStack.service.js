@@ -7,8 +7,8 @@ const getAllTechStacksService = async (filter = {}) => {
     const techStacks = await TechStack.find(filter)
     return handleResponse('Get tech stacks successfully', techStacks)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -17,8 +17,8 @@ const getTechStackLengthService = async (conditions = {}) => {
     const techStackLength = await TechStack.countDocuments(conditions)
     return handleResponse('Get tech stacks length successfully', techStackLength)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -30,8 +30,8 @@ const getOneTechStackService = async (conditions) => {
 
     return handleResponse('Get tech stack successfully', techStack)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -45,8 +45,8 @@ const createTechStackService = async (data) => {
     const newTechStack = await techStack.save()
     return handleResponse('Create tech stack successfully', newTechStack)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -72,8 +72,8 @@ const updateTechStackService = async (id, data) => {
 
     return handleResponse('Update tech stack successfully', updateTechStack)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -86,8 +86,8 @@ const deleteTechStackService = async (id) => {
     const deleteTechStack = await TechStack.deleteOne({ _id: id })
     return handleResponse('Delete tech stack successfully', deleteTechStack)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 

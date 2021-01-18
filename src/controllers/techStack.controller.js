@@ -12,7 +12,7 @@ const getAllTechStacks = async (req, res) => {
     const data = await getAllTechStacksService()
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -21,7 +21,7 @@ const getOneTechStack = async (req, res) => {
     const data = await getOneTechStackService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -30,7 +30,7 @@ const createTechStack = async (req, res) => {
     const data = await createTechStackService(req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -39,7 +39,7 @@ const updateTechStack = async (req, res) => {
     const data = await updateTechStackService(req.params.id, req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -48,7 +48,7 @@ const deleteTechStack = async (req, res) => {
     const data = await deleteTechStackService(req.params.id)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 

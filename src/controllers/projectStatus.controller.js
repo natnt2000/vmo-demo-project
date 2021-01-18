@@ -12,7 +12,7 @@ const getAllProjectStatuses = async (req, res) => {
     const data = await getAllProjectStatusesService()
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -21,7 +21,7 @@ const getOneProjectStatus = async (req, res) => {
     const data = await getOneProjectStatusService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -30,7 +30,7 @@ const createProjectStatus = async (req, res) => {
     const data = await createProjectStatusService(req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -39,7 +39,7 @@ const updateProjectStatus = async (req, res) => {
     const data = await updateProjectStatusService(req.params.id, req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -48,7 +48,7 @@ const deleteProjectStatus = async (req, res) => {
     const data = await deleteProjectStatusService(req.params.id)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 

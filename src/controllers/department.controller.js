@@ -15,7 +15,7 @@ const getAllDepartments = async (req, res) => {
     const data = await getAllDepartmentsService()
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -24,14 +24,14 @@ const getOneDepartment = async (req, res) => {
     const data = await getOneDepartmentService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
 const createDepartment = async (req, res) => {
   try {
     const { techStacks, projects } = req.body
-    
+
     if (techStacks) {
       const techStackLength = await getTechStackLengthService({ _id: { $in: techStacks } })
 
@@ -41,20 +41,20 @@ const createDepartment = async (req, res) => {
     if (projects) {
       const projectLength = await getProjectLengthService({ _id: { $in: projects } })
 
-    if (projects.length !== projectLength) return res.status(400).json(handleError('Project in list incorrect', 400))
+      if (projects.length !== projectLength) return res.status(400).json(handleError('Project in list incorrect', 400))
     }
 
     const data = await createDepartmentService(req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
 const updateDepartment = async (req, res) => {
   try {
     const { techStacks, projects } = req.body
-    
+
     if (techStacks) {
       const techStackLength = await getTechStackLengthService({ _id: { $in: techStacks } })
 
@@ -64,13 +64,13 @@ const updateDepartment = async (req, res) => {
     if (projects) {
       const projectLength = await getProjectLengthService({ _id: { $in: projects } })
 
-    if (projects.length !== projectLength.data) return res.status(400).handleError('Project in list incorrect', 400)
+      if (projects.length !== projectLength.data) return res.status(400).handleError('Project in list incorrect', 400)
     }
 
     const data = await updateDepartmentService(req.params.id, req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -79,7 +79,7 @@ const deleteDepartment = async (req, res) => {
     const data = await deleteDepartmentService(req.params.id)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 

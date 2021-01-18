@@ -1,22 +1,22 @@
 {
     "POST": {
-        "/customers": "./json/customers/create.json",
-        "/departments": "./json/departments/create.json",
-        "/projects": "./json/projects/create.json",
-        "/projectStatuses": "./json/projectStatuses/create.json",
-        "/projectTypes": "./json/projectTypes/create.json",
-        "/staffs": "./json/staffs/create.json",
-        "/techStacks": "./json/techStacks/create.json",
-        "/users": "./json/users/create.json",
-        "/auth/login": "./json/auth/login.json"
+        "/customers": "./src/json/customers/create.json",
+        "/departments": "./src/json/departments/create.json",
+        "/projects": "./src/json/projects/create.json",
+        "/projectStatuses": "./src/json/projectStatuses/create.json",
+        "/projectTypes": "./src/json/projectTypes/create.json",
+        "/staffs": "./src/json/staffs/create.json",
+        "/techStacks": "./src/json/techStacks/create.json",
+        "/users": "./src/json/users/create.json",
+        "/auth/login": "./src/json/auth/login.json"
     }, 
     "PUT": {
-        "/customers/:id": "./json/customers/update.json",
-        "/departments/:id": "./json/departments/update.json",
-        "/projects/:id": "./json/projects/update.json",
-        "/projectStatuses/:id": "./json/projectStatuses/update.json",
-        "/projectTypes/:id": "./json/projectTypes/update.json",
-        "/staffs/:id": "./json/staffs/update.json",
-        "/techStacks/:id": "./json/techStacks/update.json"
+        "/customers/:id": "./src/json/customers/update.json",
+        "/departments/:id": "./src/json/departments/update.json",
+        "/projects/:id": "./src/json/projects/update.json",
+        "/projectStatuses/:id": "./src/json/projectStatuses/update.json",
+        "/projectTypes/:id": "./src/json/projectTypes/update.json",
+        "/staffs/:id": "./src/json/staffs/update.json",
+        "/techStacks/:id": "./src/json/techStacks/update.json"
     }
 }

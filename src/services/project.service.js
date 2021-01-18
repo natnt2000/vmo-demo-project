@@ -37,8 +37,8 @@ const getAllProjectsService = async (query) => {
     const totalItems = await Project.find(conditions).countDocuments()
     return handleResponse('Get projects successfully', { totalItems, projects })
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -47,8 +47,8 @@ const getProjectLengthService = async (conditions = {}) => {
     const projectLength = await Project.countDocuments(conditions)
     return handleResponse('Get project length successfully', projectLength)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -67,8 +67,8 @@ const getOneProjectService = async (conditions) => {
 
     return handleResponse('Get project successfully', project)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -82,8 +82,8 @@ const createProjectService = async (data) => {
     const newProject = await project.save()
     return handleResponse('Create project successfully', newProject)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -104,8 +104,8 @@ const updateProjectService = async (id, data) => {
     const updateProject = await Project.updateOne({ _id: id }, { $set: data })
     return handleResponse('Update project successfully', updateProject)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -118,8 +118,8 @@ const deleteProjectService = async (id) => {
     const deleteProject = await Project.deleteOne({ _id: id })
     return handleResponse('Delete project successfully', deleteProject)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 

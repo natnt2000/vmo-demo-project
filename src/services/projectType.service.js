@@ -7,8 +7,8 @@ const getAllProjectTypeService = async (filter = {}) => {
     const projectTypes = await ProjectType.find(filter)
     return handleResponse('Get project types successfully', projectTypes)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -20,8 +20,8 @@ const getOneProjectTypeService = async (conditions) => {
 
     return handleResponse('Get project type successfully', projectType)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -38,8 +38,8 @@ const createProjectTypeService = async (data) => {
       newProjectType
     )
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -64,8 +64,8 @@ const updateProjectTypeService = async (id, data) => {
     )
     return handleResponse('Update project type successfully', updateProjectType)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -78,8 +78,8 @@ const deleteProjectTypeService = async (id) => {
     const deleteProjectType = await ProjectType.deleteOne({ _id: id })
     return handleResponse('Remove project type successfully', deleteProjectType)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 

@@ -1,0 +1,13 @@
+{
+  level: 'error',
+  timestamp: '11:13:15 18-01-2021',
+  message: 'Cast to ObjectId failed for value "5feaee81551ad72e802f58d" at path "techStack" for model "Staff"',
+  stack: 'Error: Cast to ObjectId failed for value "5feaee81551ad72e802f58d" at path "techStack" for model "Staff"\n' +
+    '    at _callee$ (C:\\Users\\ngoca\\OneDrive\\Máy tính\\vmo-demo-project\\src\\services\\/staff.service.js:47:18)\n' +
+    '    at tryCatch (C:\\Users\\ngoca\\OneDrive\\Máy tính\\vmo-demo-project\\node_modules\\regenerator-runtime\\runtime.js:63:40)\n' +
+    '    at Generator.invoke [as _invoke] (C:\\Users\\ngoca\\OneDrive\\Máy tính\\vmo-demo-project\\node_modules\\regenerator-runtime\\runtime.js:293:22)\n' +
+    '    at Generator.throw (C:\\Users\\ngoca\\OneDrive\\Máy tính\\vmo-demo-project\\node_modules\\regenerator-runtime\\runtime.js:118:21)\n' +
+    '    at asyncGeneratorStep (C:\\Users\\ngoca\\OneDrive\\Máy tính\\vmo-demo-project\\src\\services\\staff.service.js:16:103)\n' +
+    '    at _throw (C:\\Users\\ngoca\\OneDrive\\Máy tính\\vmo-demo-project\\src\\services\\staff.service.js:18:291)\n' +
+    '    at processTicksAndRejections (internal/process/task_queues.js:93:5)'
+}

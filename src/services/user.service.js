@@ -7,8 +7,8 @@ const getAllUsersService = async (filter = {}) => {
     const users = await User.find(filter)
     return handleResponse('Get users successfully', users)
   } catch (error) {
-    logger.error(error.message) 
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -22,8 +22,8 @@ const createUserService = async (data) => {
     const saveUser = await user.save()
     return handleResponse('Create user successfully', saveUser)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 

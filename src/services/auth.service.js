@@ -28,8 +28,7 @@ const loginService = async (data) => {
     logger.info(`User [${user._id}] logged in to system`)
     return handleResponse('Login successfully', { accessToken, refreshToken })
   } catch (error) {
-    console.log(error)
-    logger.error(error.message)
+    logger.error(new Error(error.message))
   }
 }
 
@@ -44,8 +43,7 @@ const refreshAccessTokenService = async (payload, refreshToken) => {
     logger.info(`User [${payload._id}] logged in to system`)
     return handleResponse('Login successfully', { accessToken, refreshToken })
   } catch (error) {
-    console.log(error)
-    logger.error(error.message)
+    logger.error(new Error(error.message))
   }
 }
 

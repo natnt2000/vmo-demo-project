@@ -44,19 +44,19 @@ const getAllStaffsService = async (query) => {
 
     return handleResponse('Get staffs successfully', { totalItems, staffs })
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
 const getStaffLengthService = async (conditions = {}) => {
-    try {
-      const staffLength = await Staff.countDocuments(conditions)
-      return handleResponse('Get staff length successfully', staffLength)
-    } catch (error) {
-      logger.error(error.message)
-      console.log(error)
-    }
+  try {
+    const staffLength = await Staff.countDocuments(conditions)
+    return handleResponse('Get staff length successfully', staffLength)
+  } catch (error) {
+    logger.error(new Error(error.message))
+
+  }
 }
 
 const getOneStaffService = async (conditions) => {
@@ -80,8 +80,8 @@ const getOneStaffService = async (conditions) => {
 
     return handleResponse('Get staff successfully', staff)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -99,8 +99,8 @@ const createStaffService = async (data) => {
     const newStaff = await staff.save()
     return handleResponse('Create staff successfully', newStaff)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -125,8 +125,8 @@ const updateStaffService = async (id, data) => {
     const updateStaff = await Staff.updateOne({ _id: id }, { $set: data })
     return handleResponse('Update staff successfully', updateStaff)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -139,8 +139,8 @@ const deleteStaffService = async (id) => {
     const deleteStaff = await Staff.deleteOne({ _id: id })
     return handleResponse('Delete staff successfully', deleteStaff)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 

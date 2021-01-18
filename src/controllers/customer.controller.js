@@ -12,7 +12,7 @@ const getAllCustomers = async (req, res) => {
     const data = await getAllCustomersService()
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -21,7 +21,7 @@ const getOneCustomer = async (req, res) => {
     const data = await getOneCustomerService({ _id: req.params.id })
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -30,7 +30,7 @@ const createCustomer = async (req, res) => {
     const data = await createCustomerService(req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -39,7 +39,7 @@ const updateCustomer = async (req, res) => {
     const data = await updateCustomerService(req.params.id, req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -48,7 +48,7 @@ const deleteCustomer = async (req, res) => {
     const data = await deleteCustomerService(req.params.id)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 

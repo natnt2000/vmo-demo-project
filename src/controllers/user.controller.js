@@ -6,7 +6,7 @@ const getAllUsers = async (req, res) => {
     const data = await getAllUsersService()
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 
@@ -15,7 +15,7 @@ const createUser = async (req, res) => {
     const data = await createUserService(req.body)
     return res.status(data.status).json(data)
   } catch (error) {
-    return res.status(500).json(handleError(error.message, 500))
+    return res.status(500).json(handleError('Internal Server Error', 500))
   }
 }
 

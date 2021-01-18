@@ -7,8 +7,8 @@ const getAllCustomersService = async (filter = {}) => {
     const customers = await Customer.find(filter)
     return handleResponse('Get customers successfully', customers)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -20,8 +20,8 @@ const getOneCustomerService = async (conditions) => {
 
     return handleResponse('Get customer successfully', customer)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -35,8 +35,7 @@ const createCustomerService = async (data) => {
     const newCustomer = await customer.save()
     return handleResponse('Create customer successfully', newCustomer)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
   }
 }
 
@@ -56,8 +55,7 @@ const updateCustomerService = async (id, data) => {
     const updateCustomer = await Customer.updateOne({ _id: id }, { $set: data })
     return handleResponse('Update customer successfully', updateCustomer)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
   }
 }
 
@@ -70,8 +68,7 @@ const deleteCustomerService = async (id) => {
     const deleteCustomer = await Customer.deleteOne({ _id: id })
     return handleResponse('Delete customer successfully', deleteCustomer)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
   }
 }
 

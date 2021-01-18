@@ -7,8 +7,8 @@ const getAllProjectStatusesService = async (filter = {}) => {
     const projectStatuses = await ProjectStatus.find(filter)
     return handleResponse('Get project statuses successfully', projectStatuses)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -20,8 +20,8 @@ const getOneProjectStatusService = async (conditions) => {
 
     return handleResponse('Get project status successfully', projectStatus)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -39,8 +39,8 @@ const createProjectStatusService = async (data) => {
       newProjectStatus
     )
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -70,8 +70,8 @@ const updateProjectStatusService = async (id, data) => {
       updateProjectStatus
     )
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -87,8 +87,8 @@ const deleteProjectStatusService = async (id) => {
       deleteProjectStatus
     )
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 

@@ -41,7 +41,8 @@
     "coverage": "nyc npm test",
     "start:dev": "cross-env NODE_ENV=dev nodemon --exec babel-node ./src/app.js",
     "start": "cross-env NODE_ENV=dev node app.js",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js",
+    "lint": "npx eslint ./src/**.js"
   },
   "keywords": [],
   "author": "",

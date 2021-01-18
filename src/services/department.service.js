@@ -7,8 +7,8 @@ const getAllDepartmentsService = async (filter = {}) => {
     const departments = await Department.find(filter)
     return handleResponse('Get departments successfully', departments)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -26,8 +26,8 @@ const getOneDepartmentService = async (conditions) => {
 
     return handleResponse('Get department successfully', department)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -42,8 +42,8 @@ const createDepartmentService = async (data) => {
     const newDepartment = await department.save()
     return handleResponse('Create department successfully', newDepartment)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -67,8 +67,8 @@ const updateDepartmentService = async (id, data) => {
     )
     return handleResponse('Update department successfully', updateDepartment)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 
@@ -81,8 +81,8 @@ const deleteDepartmentService = async (id) => {
     const deleteDepartment = await Department.deleteOne({ _id: id })
     return handleResponse('Delete department successfully', deleteDepartment)
   } catch (error) {
-    logger.error(error.message)
-    console.log(error)
+    logger.error(new Error(error.message))
+
   }
 }
 

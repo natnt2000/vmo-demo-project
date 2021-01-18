@@ -46,7 +46,7 @@ ProjectSchema.post('save', async function (project) {
       { $push: { projects: project._id } }
     )
   } catch (error) {
-    console.log(error)
+
   }
 })
 

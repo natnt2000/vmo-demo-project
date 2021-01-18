@@ -45,7 +45,7 @@ const verifyRefreshToken = async (req, res, next) => {
     req.userId = accessPayload._id
     return next()
   } catch (error) {
-    console.log(error)
+
     if (error.name) return res.status(401).json(handleError(error.message, 401))
   }
 }
