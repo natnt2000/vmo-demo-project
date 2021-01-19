@@ -1,5 +1,6 @@
 import { jwtDecode, jwtVerify } from '../helpers/token.helper'
 import { handleError } from '../helpers/response.helper'
+import logger from '../helpers/logger.helper'
 
 const verifyAccessToken = async (req, res, next) => {
   try {
@@ -17,7 +18,8 @@ const verifyAccessToken = async (req, res, next) => {
     req.userId = user._id
     return next()
   } catch (error) {
-    if (error.name) return res.status(401).json(handleError(error.message, 401))
+    logger.error(new Error(error.message))
+    return res.status(401).json(handleError('Access Denied', 401))
   }
 }
 
@@ -37,16 +39,13 @@ const verifyRefreshToken = async (req, res, next) => {
       process.env.REFRESH_TOKEN_SECRET_KEY
     )
 
-    if (accessPayload.exp * 1000 > Date.now())
-      return res.status(401).json(handleError('Access Token still alive', 401))
-
     if (accessPayload._id !== refreshPayload._id)
       return res.status(401).json(handleError('Access Denied', 401))
     req.userId = accessPayload._id
     return next()
   } catch (error) {
-
-    if (error.name) return res.status(401).json(handleError(error.message, 401))
+    logger.error(new Error(error.message))
+    return res.status(401).json(handleError('Access Denied', 401))
   }
 }
 
