@@ -7,7 +7,6 @@ import routes from './routes'
 import { config } from 'dotenv'
 import { urlencoded, json } from 'body-parser'
 import cors from 'cors'
-import helmet from 'helmet'
 
 config({ path: `./.env.${process.env.NODE_ENV}` })
 
@@ -17,7 +16,6 @@ const port = 3000
 app.use(urlencoded({ extended: false }))
 app.use(json())
 app.use(cors())
-app.use(helmet())
 
 database()
 routes(app)
